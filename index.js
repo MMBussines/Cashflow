@@ -17,16 +17,27 @@ const openai = new OpenAI({
 // INFORMACIÓN OFICIAL
 // ==========================================================
 
-const DATOS_PAGO = {
-  banco: "Spin by OXXO",
-  titular: "Francisco Camacho Sotelo",
-  clabe: "728969000160022558",
+const NEGOCIO = {
+  nombre: "Enseña Sin Estrés",
+  agente: "Cris",
+  edadRecomendada: "3 a 8 años",
 
-  aportes: {
-    gratitud: 90,
-    proyecto: 150,
-    alcance: 200
-  }
+  productos: {
+    kitAntipantallas: {
+      nombre: "Kit Anti-Pantallas",
+      precio: 99
+    },
+
+    paquetePremium: {
+      nombre: "Paquete Premium",
+      precio: 130
+    }
+  },
+
+  metodosPago: [
+    "Transferencia bancaria",
+    "Depósito en OXXO"
+  ]
 };
 
 // ==========================================================
@@ -34,69 +45,220 @@ const DATOS_PAGO = {
 // ==========================================================
 
 const SYSTEM_PROMPT = `
-Eres Isabella Rojas, asistente de soporte del proyecto
-Cuando Dios Habla.
+Eres Cris, asistente de soporte de Enseña Sin Estrés.
 
-Tu personalidad es amable, cálida, espiritual, paciente,
-respetuosa y humana.
+Tu trabajo es atender por WhatsApp a personas interesadas
+en el Kit Anti-Pantallas y el Paquete Premium.
+
+Tu personalidad es cálida, amable, cercana, profesional
+y humana.
 
 Responde como una persona real por WhatsApp.
 
 REGLAS DE ESTILO:
 
-- Responde en español.
-- Utiliza párrafos cortos.
-- Deja una línea en blanco entre ideas.
-- Usa emojis cálidos con moderación.
+- Responde siempre en español.
+- Utiliza párrafos cortos y fáciles de leer.
+- Deja una línea en blanco entre ideas cuando ayude a la lectura.
+- Usa emojis de forma moderada. 💛😊
 - Evita bloques largos de texto.
 - No repitas información innecesariamente.
 - No saludes nuevamente si la conversación ya comenzó.
-- No hagas preguntas innecesarias.
-- Responde directamente la duda del usuario.
+- No hagas preguntas abiertas innecesarias.
+- Responde directamente la duda del cliente.
 - No uses Markdown como encabezados con símbolos #.
-- No inventes enlaces, promociones, cuentas ni información.
 - No digas que eres una inteligencia artificial.
-- No presiones a la persona para pagar.
-- El apoyo es voluntario.
-- Nunca presentes el apoyo como una compra obligatoria.
+- No presiones al cliente.
+- No satures al cliente con información que no haya solicitado.
+- Responde normalmente en uno o dos párrafos cortos,
+  salvo que sea necesario enumerar contenido.
 
-INFORMACIÓN OFICIAL DEL PROYECTO:
+REGLAS OBLIGATORIAS:
 
-El material principal es un libro digital en formato PDF
-llamado "Cuando Dios Habla".
+- Utiliza exclusivamente la información oficial incluida
+  en esta base de conocimiento.
+- No inventes información.
+- No inventes precios, promociones, productos,
+  características, beneficios, garantías, políticas,
+  condiciones, tiempos, enlaces, cuentas bancarias,
+  números de tarjeta, CLABE, referencias de pago
+  ni instrucciones que no estén autorizadas aquí.
+- No contradigas los precios, condiciones, edades,
+  formas de entrega ni métodos de pago oficiales.
+- Si no existe información suficiente para responder,
+  indica de manera natural que necesitas confirmar ese dato
+  con el equipo para brindar información correcta.
+- Nunca asegures algo que no aparezca expresamente
+  en esta información oficial.
+- Cuando respondas una pregunta concreta,
+  contesta únicamente lo necesario.
 
-El PDF ya fue enviado previamente dentro de la conversación
-de WhatsApp.
+INFORMACIÓN OFICIAL DEL NEGOCIO:
 
-El contenido es bíblico y no pertenece exclusivamente a una
-religión o denominación.
+Nombre del negocio: Enseña Sin Estrés.
 
-Los montos de apoyo sugeridos son:
+Nombre del agente: Cris.
 
-- $70 MXN como muestra de gratitud.
-- $150 MXN para apoyar el proyecto.
-- $200 MXN para ayudarnos a llegar a más personas.
+Producto principal: Kit Anti-Pantallas.
 
-La persona puede realizar su apoyo por:
+También se ofrece el Paquete Premium.
+
+El producto es digital, descargable e imprimible.
+
+El material está recomendado para pequeños de 3 a 8 años.
+
+PRECIO:
+
+- Kit Anti-Pantallas: $99 MXN.
+- Paquete Premium: $130 MXN.
+
+MÉTODOS DE PAGO:
 
 - Transferencia bancaria.
 - Depósito en OXXO.
 
-DATOS PARA TRANSFERENCIA:
+No tienes datos bancarios, números de cuenta, CLABE,
+tarjeta, QR ni referencias de pago autorizados dentro
+de esta base.
 
-Banco: Spin by OXXO
-Titular: Francisco Camacho Sotelo
-CLABE: 728969000160022558
+Si el cliente solicita alguno de esos datos específicos,
+indica que necesitas confirmar ese dato con el equipo.
 
-Después de realizar el apoyo, la persona debe enviar en este
-mismo chat la imagen de su comprobante.
+FORMA DE ENTREGA OFICIAL:
 
-El apoyo puede hacerse después, mañana o cuando la persona
-tenga oportunidad. No existe ningún problema por esperar.
+Una vez confirmado el pago, el cliente recibe
+inmediatamente una Guía de Acceso en PDF.
 
-Cuando respondas una pregunta concreta, no repitas todo el
-discurso de venta. Contesta únicamente lo necesario de manera
-clara, amable, ordenada y visual.
+La Guía de Acceso contiene las instrucciones y enlaces
+para acceder y descargar los materiales.
+
+CONTENIDO DEL KIT ANTI-PANTALLAS:
+
+El Kit Anti-Pantallas incluye:
+
+- Juegos y desafíos.
+- Recortables.
+- Actividades de motricidad.
+- Inteligencia emocional.
+- Coloreables.
+- Cuadernillos.
+- Más de 500 actividades.
+- Todos los bonos incluidos.
+
+BONOS OFICIALES:
+
+- Tarjetas "Mamá, Estoy Aburrido".
+- Sistema de Recompensas Anti-Pantallas.
+- Guía rápida para padres.
+- Libro personalizable.
+- Pack Paper Craft 3D.
+
+KIT PEQUEÑOS GENIOS:
+
+El Kit Pequeños Genios incluye actividades de:
+
+- Lectoescritura.
+- Pensamiento Matemático.
+- Lógica.
+
+El material está listo para imprimir.
+
+PAQUETE PREMIUM:
+
+El Paquete Premium cuesta $130 MXN e incluye:
+
+- Kit Anti-Pantallas.
+- Kit Pequeños Genios.
+- Biblioteca Premium de Refuerzo Escolar.
+- Todos los bonos.
+- Acceso de por vida.
+
+BIBLIOTECA PREMIUM DE REFUERZO ESCOLAR:
+
+Contiene material complementario para seguir
+fortaleciendo el aprendizaje durante preescolar
+y los primeros años de primaria.
+
+Incluye recursos adicionales para continuar
+practicando en casa.
+
+FORMATO DEL MATERIAL:
+
+El producto es 100% digital.
+
+Los materiales se manejan en formato PDF
+listo para descargar e imprimir.
+
+No es un solo libro.
+
+El cliente recibe una biblioteca digital completa
+con cuadernillos, actividades y diferentes recursos
+organizados por categorías.
+
+ACCESO Y DESCARGA:
+
+No existe límite de tiempo para descargar los archivos.
+
+El acceso es permanente.
+
+El cliente puede descargar los archivos cuando lo necesite.
+
+SEGURIDAD DE LA COMPRA:
+
+Llevamos tiempo trabajando con madres, padres,
+docentes y profesionales.
+
+Gracias a Dios no hemos tenido inconvenientes
+con la entrega de nuestros materiales.
+
+La decisión de confiar en nosotros
+es completamente del cliente.
+
+CASO DE PEQUEÑOS DE 2 AÑOS:
+
+El material está recomendado para pequeños
+de 3 a 8 años.
+
+Sin embargo, algunas mamás nos cuentan que también
+lo utilizan con pequeños de 2 años, especialmente
+en actividades sencillas de:
+
+- Trazos.
+- Motricidad.
+- Coloreado.
+- Recortables.
+
+Siempre adaptándolas a sus habilidades.
+
+OBJETIVO DE LA CONVERSACIÓN:
+
+Atender a clientes interesados.
+
+Resolver sus dudas de forma breve y clara.
+
+Presentar las opciones disponibles.
+
+Guiarlos hacia el siguiente paso de la compra
+cuando corresponda.
+
+El siguiente paso puede ser:
+
+- Elegir entre el Kit Anti-Pantallas y el Paquete Premium.
+- Elegir entre transferencia bancaria y depósito en OXXO.
+- Continuar con el proceso para completar su acceso.
+
+CIERRE COMERCIAL:
+
+- Agrega un cierre comercial únicamente cuando
+  resulte natural y útil.
+- No agregues un cierre de compra automáticamente
+  a todas las respuestas.
+- Si el cliente pregunta por precio, contenido del producto,
+  opciones de compra o métodos de pago,
+  puedes guiarlo al siguiente paso.
+- Si el cliente solo pregunta por edad, formato,
+  descarga, entrega, seguridad o una duda informativa,
+  responde primero la duda sin presionarlo.
 `;
 
 // ==========================================================
@@ -114,7 +276,9 @@ function normalizarTexto(valor) {
 }
 
 function contieneAlguna(texto, frases) {
-  return frases.some((frase) => texto.includes(frase));
+  return frases.some((frase) =>
+    texto.includes(normalizarTexto(frase))
+  );
 }
 
 function elegirAleatoria(opciones) {
@@ -134,117 +298,263 @@ function limpiarRespuesta(valor) {
 }
 
 // ==========================================================
-// MENSAJES REUTILIZABLES
+// CIERRES COMERCIALES
 // ==========================================================
 
-function cierrePago() {
-  return [
-    "💌 Para apoyar este proyecto espiritual puedes elegir:",
-    "",
-    "🏦 Transferencia bancaria",
-    "🏪 Depósito en OXXO",
-    "",
-    "¿Cuál opción prefieres? 🙏"
-  ].join("\n");
+function cierrePaquete() {
+  return elegirAleatoria([
+    "💛 ¿Cuál prefieres para tu peque: Kit Anti-Pantallas o Paquete Premium?",
+
+    "😊 Si deseas continuar, ¿cuál opción prefieres: Kit Anti-Pantallas o Paquete Premium?",
+
+    "✨ ¿Te gustaría continuar con el Kit Anti-Pantallas o con el Paquete Premium?"
+  ]);
 }
 
-function agregarCierre(respuesta) {
-  const respuestaLimpia = limpiarRespuesta(respuesta);
+function cierreMetodoPago() {
+  return elegirAleatoria([
+    "💳 Puedes continuar por transferencia bancaria 🏦 o depósito en OXXO 🏪. ¿Cuál prefieres? 😊",
+
+    "💛 Para continuar, puedes elegir transferencia bancaria 🏦 o depósito en OXXO 🏪. ¿Cuál opción prefieres?",
+
+    "😊 El siguiente paso es elegir tu método de pago: transferencia bancaria 🏦 u OXXO 🏪."
+  ]);
+}
+
+function debeAgregarCierre(textoNormalizado) {
+  const intencionPago =
+    contieneAlguna(textoNormalizado, [
+      "metodo de pago",
+      "metodos de pago",
+      "formas de pago",
+      "forma de pago",
+      "como puedo pagar",
+      "como pago",
+      "quiero pagar",
+      "pagar"
+    ]);
+
+  const intencionProducto =
+    contieneAlguna(textoNormalizado, [
+      "precio",
+      "cuanto cuesta",
+      "cuanto vale",
+      "costo",
+      "que incluye",
+      "incluye el kit",
+      "actividades",
+      "pequenos genios",
+      "kit antipantallas",
+      "paquete premium",
+      "comprar",
+      "quiero comprar",
+      "me interesa"
+    ]);
+
+  const pareceConsultaDeEntrega =
+    contieneAlguna(textoNormalizado, [
+      "despues de pagar",
+      "despues del pago",
+      "cuando me llega",
+      "cuando lo recibo",
+      "cuanto tarda",
+      "como se entrega",
+      "entrega"
+    ]);
+
+  if (pareceConsultaDeEntrega) {
+    return null;
+  }
+
+  if (intencionPago) {
+    return "pago";
+  }
+
+  if (intencionProducto) {
+    return "paquete";
+  }
+
+  return null;
+}
+
+function agregarCierre(
+  respuesta,
+  mensajeOriginal
+) {
+  const respuestaLimpia =
+    limpiarRespuesta(respuesta);
 
   if (!respuestaLimpia) {
-    return cierrePago();
+    return "Necesito confirmar ese dato con el equipo para darte información correcta. 💛";
+  }
+
+  const tipoCierre =
+    debeAgregarCierre(
+      normalizarTexto(mensajeOriginal)
+    );
+
+  if (!tipoCierre) {
+    return respuestaLimpia;
   }
 
   const normalizada =
     normalizarTexto(respuestaLimpia);
 
   const yaIncluyeCierre =
-    normalizada.includes("cual opcion prefieres") ||
+    normalizada.includes(
+      "cual prefieres"
+    ) ||
+    normalizada.includes(
+      "cual opcion prefieres"
+    ) ||
+    normalizada.includes(
+      "puedes elegir entre el kit"
+    ) ||
     (
-      normalizada.includes("transferencia bancaria") &&
-      normalizada.includes("deposito en oxxo")
+      normalizada.includes(
+        "transferencia bancaria"
+      ) &&
+      normalizada.includes(
+        "deposito en oxxo"
+      ) &&
+      normalizada.includes(
+        "prefieres"
+      )
     );
 
   if (yaIncluyeCierre) {
     return respuestaLimpia;
   }
 
-  return `${respuestaLimpia}\n\n${cierrePago()}`;
+  const cierre =
+    tipoCierre === "pago"
+      ? cierreMetodoPago()
+      : cierrePaquete();
+
+  return `${respuestaLimpia}\n\n${cierre}`;
 }
 
-function respuestaCuenta() {
-  return [
-    "Claro 😊 Estos son los datos para realizar tu apoyo por transferencia:",
-    "",
-    `🏦 Banco: ${DATOS_PAGO.banco}`,
-    `👤 Titular: ${DATOS_PAGO.titular}`,
-    `🔢 CLABE: ${DATOS_PAGO.clabe}`,
-    "",
-    "Cuando realices tu apoyo, envíame aquí la imagen del comprobante y con mucho gusto te entregaré tus regalos 🎁🙏"
-  ].join("\n");
+// ==========================================================
+// RESPUESTAS OFICIALES REUTILIZABLES
+// ==========================================================
+
+function respuestaDatosPagoNoDisponibles() {
+  return elegirAleatoria([
+    "💛 Para darte los datos correctos de transferencia u OXXO, necesito confirmar esa información con el equipo.",
+
+    "😊 Necesito confirmar con el equipo los datos específicos de pago para compartirte la información correcta. 💛",
+
+    "💛 Los datos específicos de cuenta, CLABE, tarjeta, código o QR no están disponibles en mi información autorizada. Necesito confirmarlos con el equipo."
+  ]);
 }
 
-function respuestaPagoPosterior() {
-  return [
-    "Claro 😊 No hay ningún problema, puedes realizar tu apoyo después.",
-    "",
-    "Cuando estés listo, estos son los datos para transferencia:",
-    "",
-    `🏦 Banco: ${DATOS_PAGO.banco}`,
-    `👤 Titular: ${DATOS_PAGO.titular}`,
-    `🔢 CLABE: ${DATOS_PAGO.clabe}`,
-    "",
-    "Después solo envíame aquí la imagen del comprobante para entregarte tus regalos 🎁",
-    "",
-    "Que Dios te bendiga 🙏❤️"
-  ].join("\n");
-}
+function respuestaMetodosPago() {
+  return elegirAleatoria([
+    "💳 Puedes realizar tu pago mediante transferencia bancaria 🏦 o depósito en OXXO 🏪✨.",
 
-function respuestaOxxo() {
-  return [
-    "Claro 😊 También puedes realizar tu apoyo mediante depósito en OXXO.",
-    "",
-    "Utiliza el código o QR de Spin que te compartimos anteriormente en esta conversación 🏪",
-    "",
-    "Cuando termines, envíame aquí una fotografía completa y legible del ticket para poder entregarte tus regalos 🎁🙏"
-  ].join("\n");
-}
+    "💛 Aceptamos pago mediante transferencia bancaria 🏦 o depósito en OXXO 🏪✨.",
 
-function respuestaReligion() {
-  return [
-    "El contenido está basado en la Biblia 🙏📖",
-    "",
-    "No pertenece exclusivamente a una religión o denominación. Fue preparado para cualquier persona que quiera acercarse más a Dios y profundizar en Su Palabra ❤️"
-  ].join("\n");
+    "😊 Puedes pagar por transferencia bancaria 🏦 o mediante depósito en OXXO 🏪. 💳✨"
+  ]);
 }
 
 function respuestaEntrega() {
-  return [
-    "El libro es completamente digital y se entrega en formato PDF 📖✨",
-    "",
-    "Ya fue enviado anteriormente en esta misma conversación. Puedes buscarlo un poco más arriba en el chat y descargarlo directamente en tu teléfono 📲"
-  ].join("\n");
+  return elegirAleatoria([
+    "📄 En cuanto se confirme tu pago, recibirás inmediatamente una Guía de Acceso en PDF con las instrucciones y enlaces para acceder y descargar tus materiales. 🔗📚✨",
+
+    "💛 Una vez confirmado tu pago, recibirás inmediatamente una Guía de Acceso en PDF que contiene las instrucciones y enlaces para entrar y descargar tus materiales. 📄🔗",
+
+    "📲 Al confirmarse tu pago, recibirás inmediatamente una Guía de Acceso en PDF con las instrucciones y enlaces necesarios para acceder y descargar tus materiales. 💛✨"
+  ]);
+}
+
+function respuestaSeguridad() {
+  return elegirAleatoria([
+    "💛 ¡Claro! 😊 Llevamos tiempo trabajando con madres, padres, docentes y profesionales. Gracias a Dios no hemos tenido inconvenientes con la entrega de nuestros materiales. 🙏✨ Al final, la decisión de confiar en nosotros es completamente tuya. 🤍",
+
+    "💛 Llevamos tiempo trabajando con madres, padres, docentes y profesionales y, gracias a Dios, no hemos tenido inconvenientes con la entrega de nuestros materiales. 🙏✨ La decisión de confiar en nosotros es completamente tuya. 😊",
+
+    "😊💛 Hemos trabajado con madres, padres, docentes y profesionales y, gracias a Dios, no hemos tenido inconvenientes con nuestras entregas. 🙏✨ Al final, la decisión de confiar en nosotros siempre es completamente tuya. 🤍"
+  ]);
+}
+
+function respuestaDosAnos() {
+  return elegirAleatoria([
+    "💛 Nuestro material está recomendado para pequeños de 3 a 8 años. 😊 Sin embargo, algunas mamás nos cuentan que también lo utilizan con sus pequeños de 2 años, especialmente en actividades sencillas de trazos, motricidad, coloreado y recortables, siempre adaptándolas a sus habilidades. 🎨✂️✨",
+
+    "💛 El material está recomendado para pequeños de 3 a 8 años. 😊 Algunas mamás también lo utilizan con pequeños de 2 años en actividades sencillas como trazos, motricidad, coloreado y recortables, adaptándolas siempre a sus habilidades. 🎨✂️✨",
+
+    "😊 La edad recomendada es de 3 a 8 años. 💛 Aun así, algunas mamás nos cuentan que con pequeños de 2 años usan actividades sencillas de trazos, motricidad, coloreado y recortables, siempre ajustándolas a sus habilidades. 🎨✨"
+  ]);
+}
+
+function respuestaFisico() {
+  return elegirAleatoria([
+    "📲 No. Es un producto 100% digital, en formato PDF listo para descargar e imprimir. 🖨️✨",
+
+    "📲 El material no es físico; es 100% digital y está en formato PDF listo para descargar e imprimir. 🖨️✨",
+
+    "💛 Es un producto completamente digital en formato PDF, listo para descargar e imprimir. No es material físico. 📲🖨️"
+  ]);
+}
+
+function respuestaDescarga() {
+  return elegirAleatoria([
+    "⏰ No hay límite. Tu acceso es permanente y puedes descargar los archivos cuando lo necesites. 📚✨",
+
+    "💛 No tienes límite de tiempo para descargarlo. El acceso es permanente y puedes descargar los archivos cuando lo necesites. 📚✨",
+
+    "📚 Tu acceso es permanente, así que no hay límite de tiempo para descargar los archivos. Puedes hacerlo cuando lo necesites. ⏰✨"
+  ]);
+}
+
+function respuestaLibro() {
+  return elegirAleatoria([
+    "💛 No. Recibes una biblioteca digital completa con cuadernillos, actividades y diferentes recursos organizados por categorías. 📚🧩",
+
+    "📚 No es solo un libro. Recibes una biblioteca digital completa con cuadernillos, actividades y distintos recursos organizados por categorías. 💛🧩",
+
+    "💛 Recibes mucho más que un solo libro: es una biblioteca digital con cuadernillos, actividades y diferentes recursos organizados por categorías. 📚✨"
+  ]);
+}
+
+function respuestaKitAntipantallas() {
+  return elegirAleatoria([
+    "🎨 El Kit Anti-Pantallas incluye juegos, desafíos, recortables, motricidad, inteligencia emocional, coloreables, cuadernillos y más de 500 actividades, además de todos los bonos. 🎁✨",
+
+    "🎨 Incluye juegos, desafíos, recortables, motricidad, inteligencia emocional, coloreables, cuadernillos y más de 500 actividades, además de todos los bonos. 🎁✨",
+
+    "💛 En el Kit Anti-Pantallas encontrarás juegos, desafíos, recortables, motricidad, inteligencia emocional, coloreables, cuadernillos y más de 500 actividades, además de todos los bonos. 🎨🎁"
+  ]);
+}
+
+function respuestaPequenosGenios() {
+  return elegirAleatoria([
+    "📚 El Kit Pequeños Genios incluye actividades de Lectoescritura, Pensamiento Matemático y Lógica, listas para imprimir. ✏️🔢🧩",
+
+    "📚 Pequeños Genios incluye actividades listas para imprimir de Lectoescritura, Pensamiento Matemático y Lógica. ✏️🔢🧩",
+
+    "✏️📚 El Kit Pequeños Genios contiene actividades de Lectoescritura, Pensamiento Matemático y Lógica, todas listas para imprimir. 🔢🧩"
+  ]);
 }
 
 function respuestaPrecio() {
-  return [
-    "El libro digital ya fue entregado y el apoyo al proyecto es completamente voluntario 🙏",
-    "",
-    "Puedes elegir la cantidad con la que te sientas cómodo:",
-    "",
-    `💛 $${DATOS_PAGO.aportes.gratitud} MXN como muestra de gratitud`,
-    `🌱 $${DATOS_PAGO.aportes.proyecto} MXN para apoyar el proyecto`,
-    `✨ $${DATOS_PAGO.aportes.alcance} MXN para ayudarnos a llegar a más personas`,
-    "",
-    cierrePago()
-  ].join("\n");
+  return elegirAleatoria([
+    `💛 El ${NEGOCIO.productos.kitAntipantallas.nombre} cuesta $${NEGOCIO.productos.kitAntipantallas.precio} MXN. También puedes adquirir el ${NEGOCIO.productos.paquetePremium.nombre} por $${NEGOCIO.productos.paquetePremium.precio} MXN. ✨`,
+
+    `💛 El precio del ${NEGOCIO.productos.kitAntipantallas.nombre} es de $${NEGOCIO.productos.kitAntipantallas.precio} MXN y el ${NEGOCIO.productos.paquetePremium.nombre} tiene un costo de $${NEGOCIO.productos.paquetePremium.precio} MXN. ✨`,
+
+    `✨ Puedes elegir el ${NEGOCIO.productos.kitAntipantallas.nombre} por $${NEGOCIO.productos.kitAntipantallas.precio} MXN o el ${NEGOCIO.productos.paquetePremium.nombre} por $${NEGOCIO.productos.paquetePremium.precio} MXN. 💛`
+  ]);
 }
 
 // ==========================================================
 // RESPUESTAS DIRECTAS
 // ==========================================================
 
-function respuestaDirecta(mensajeOriginal) {
+function respuestaDirecta(
+  mensajeOriginal
+) {
   const texto =
     normalizarTexto(mensajeOriginal);
 
@@ -253,159 +563,298 @@ function respuestaDirecta(mensajeOriginal) {
   }
 
   // --------------------------------------------------------
-  // PAGAR DESPUÉS
-  // Debe evaluarse antes de la intención genérica de pago.
+  // 2 AÑOS
+  // Keyword oficial: "2 años"
+  // Intención específica, se evalúa primero.
   // --------------------------------------------------------
 
-  const preguntaPagoPosterior =
+  const preguntaDosAnos =
     contieneAlguna(texto, [
-      "pagar despues",
-      "pago despues",
-      "depositar despues",
-      "transferir despues",
-      "hacerlo despues",
-      "puedo hacerlo despues",
-      "puedo pagar manana",
-      "pagar manana",
-      "pago manana",
-      "depositar manana",
-      "transferir manana",
-      "lo hago manana",
-      "mas tarde",
-      "otro dia",
-      "la proxima semana",
-      "cuando tenga dinero"
-    ]) ||
-    texto === "despues" ||
-    texto === "manana";
+      "2 años",
+      "2 ano",
+      "dos años",
+      "tiene 2",
+      "mi hijo tiene 2",
+      "mi hija tiene 2"
+    ]);
 
-  if (preguntaPagoPosterior) {
-    return respuestaPagoPosterior();
+  if (preguntaDosAnos) {
+    return {
+      intencion: "edad_2_anos",
+      respuesta: respuestaDosAnos()
+    };
   }
 
   // --------------------------------------------------------
-  // DATOS BANCARIOS
+  // KIT PEQUEÑOS GENIOS
+  // Keyword oficial: "genios"
   // --------------------------------------------------------
 
-  const preguntaCuenta =
+  const preguntaGenios =
+    contieneAlguna(texto, [
+      "genios",
+      "pequenos genios",
+      "kit pequenos genios",
+      "que incluye pequenos genios",
+      "que trae pequenos genios",
+      "contenido pequenos genios"
+    ]);
+
+  if (preguntaGenios) {
+    return {
+      intencion: "kit_pequenos_genios",
+      respuesta:
+        respuestaPequenosGenios()
+    };
+  }
+
+  // --------------------------------------------------------
+  // MATERIAL FÍSICO / DIGITAL
+  // Keyword oficial: "fisico"
+  // --------------------------------------------------------
+
+  const preguntaFisico =
+    contieneAlguna(texto, [
+      "fisico",
+      "es fisico",
+      "material fisico",
+      "producto fisico",
+      "me llega fisico",
+      "es digital",
+      "material digital",
+      "producto digital",
+      "es pdf",
+      "formato pdf"
+    ]);
+
+  if (preguntaFisico) {
+    return {
+      intencion: "material_fisico",
+      respuesta: respuestaFisico()
+    };
+  }
+
+  // --------------------------------------------------------
+  // TIEMPO DE DESCARGA
+  // Keyword oficial: "descarga"
+  // --------------------------------------------------------
+
+  const preguntaDescarga =
+    contieneAlguna(texto, [
+      "descarga",
+      "descargar",
+      "cuanto tiempo tengo para descargar",
+      "tiempo para descargar",
+      "hay limite para descargar",
+      "limite de descarga",
+      "puedo descargar despues",
+      "cuando puedo descargar"
+    ]);
+
+  if (preguntaDescarga) {
+    return {
+      intencion: "tiempo_descarga",
+      respuesta: respuestaDescarga()
+    };
+  }
+
+  // --------------------------------------------------------
+  // ¿ES SOLO UN LIBRO?
+  // Keyword oficial: "libro"
+  // --------------------------------------------------------
+
+  const preguntaLibro =
+    contieneAlguna(texto, [
+      "libro",
+      "es solo un libro",
+      "solo es un libro",
+      "un solo libro",
+      "cuadernillos",
+      "biblioteca digital"
+    ]);
+
+  if (preguntaLibro) {
+    return {
+      intencion:
+        "biblioteca_no_libro",
+      respuesta: respuestaLibro()
+    };
+  }
+
+  // --------------------------------------------------------
+  // ENTREGA
+  // Keyword oficial: "entrega"
+  // Se evalúa antes de la intención genérica de pago.
+  // --------------------------------------------------------
+
+  const preguntaEntrega =
+    contieneAlguna(texto, [
+      "entrega",
+      "como se entrega",
+      "como lo recibo",
+      "como recibo",
+      "cuando lo recibo",
+      "cuando me llega",
+      "cuanto tarda",
+      "cuanto tarda en llegar",
+      "despues del pago",
+      "despues de pagar",
+      "despues de realizar el pago",
+      "guia de acceso",
+      "como llega",
+      "donde lo recibo"
+    ]);
+
+  if (preguntaEntrega) {
+    return {
+      intencion: "entrega",
+      respuesta: respuestaEntrega()
+    };
+  }
+
+  // --------------------------------------------------------
+  // SEGURIDAD / CONFIANZA
+  // Keyword oficial: "seguro"
+  // --------------------------------------------------------
+
+  const preguntaSeguridad =
+    contieneAlguna(texto, [
+      "seguro",
+      "es seguro",
+      "compra segura",
+      "es confiable",
+      "confiable",
+      "puedo confiar",
+      "como se que me llega",
+      "como se que lo recibire",
+      "es real",
+      "estafa",
+      "fraude"
+    ]);
+
+  if (preguntaSeguridad) {
+    return {
+      intencion:
+        "seguridad_compra",
+      respuesta:
+        respuestaSeguridad()
+    };
+  }
+
+  // --------------------------------------------------------
+  // PRECIO
+  // Keyword oficial: "precio"
+  // --------------------------------------------------------
+
+  const preguntaPrecio =
+    contieneAlguna(texto, [
+      "precio",
+      "cuanto cuesta",
+      "cuanto vale",
+      "costo",
+      "que precio tiene",
+      "cuanto sale",
+      "precio del kit",
+      "precio del paquete",
+      "$99",
+      "$130"
+    ]);
+
+  if (preguntaPrecio) {
+    return {
+      intencion: "precio",
+      respuesta: respuestaPrecio()
+    };
+  }
+
+  // --------------------------------------------------------
+  // CONTENIDO DEL KIT ANTI-PANTALLAS
+  // Keyword oficial: "actividades"
+  // --------------------------------------------------------
+
+  const preguntaActividades =
+    contieneAlguna(texto, [
+      "actividades",
+      "que incluye el kit antipantallas",
+      "que incluye el kit anti pantallas",
+      "que trae el kit antipantallas",
+      "que trae el kit anti pantallas",
+      "contenido del kit antipantallas",
+      "contenido del kit anti pantallas",
+      "que viene en el kit"
+    ]);
+
+  if (preguntaActividades) {
+    return {
+      intencion:
+        "contenido_kit_antipantallas",
+      respuesta:
+        respuestaKitAntipantallas()
+    };
+  }
+
+  // --------------------------------------------------------
+  // DATOS ESPECÍFICOS DE PAGO NO DISPONIBLES
+  // Evita inventar cuenta, CLABE, tarjeta, código o QR.
+  // --------------------------------------------------------
+
+  const preguntaDatosPago =
     contieneAlguna(texto, [
       "numero de cuenta",
-      "numero para depositar",
       "numero para transferir",
       "datos bancarios",
       "datos de transferencia",
       "cuenta bancaria",
       "a que cuenta",
-      "en que cuenta",
-      "donde transfiero",
-      "donde deposito",
       "cual es la cuenta",
-      "cual cuenta",
       "pasame la cuenta",
       "mandame la cuenta",
-      "clave interbancaria"
-    ]) ||
-    texto === "cuenta" ||
-    texto === "clabe";
-
-  if (preguntaCuenta) {
-    return respuestaCuenta();
-  }
-
-  // --------------------------------------------------------
-  // OXXO
-  // --------------------------------------------------------
-
-  const preguntaOxxo =
-    contieneAlguna(texto, [
-      "deposito en oxxo",
-      "depositar en oxxo",
-      "pagar en oxxo",
-      "pago en oxxo",
-      "como pago en oxxo",
-      "como deposito en oxxo",
+      "clabe",
+      "tarjeta para depositar",
+      "numero de tarjeta",
       "codigo de oxxo",
       "qr de oxxo",
-      "ticket de oxxo"
-    ]) ||
-    texto === "oxxo";
+      "codigo para oxxo"
+    ]);
 
-  if (preguntaOxxo) {
-    return respuestaOxxo();
+  if (preguntaDatosPago) {
+    return {
+      intencion:
+        "datos_pago_por_confirmar",
+      respuesta:
+        respuestaDatosPagoNoDisponibles()
+    };
   }
 
   // --------------------------------------------------------
-  // RELIGIÓN
+  // MÉTODOS DE PAGO
+  // Keyword oficial: "pago"
+  // Se evalúa después de entrega para evitar confundir
+  // "después del pago, ¿cuándo me llega?"
   // --------------------------------------------------------
 
-  if (
+  const preguntaPago =
     contieneAlguna(texto, [
-      "catolico",
-      "catolica",
-      "cristiano",
-      "cristiana",
-      "religion",
-      "religioso",
-      "religiosa",
-      "evangelico",
-      "evangelica",
-      "denominacion",
-      "de que iglesia"
-    ])
-  ) {
-    return respuestaReligion();
-  }
+      "pago",
+      "metodo de pago",
+      "metodos de pago",
+      "forma de pago",
+      "formas de pago",
+      "como puedo pagar",
+      "como pago",
+      "donde pago",
+      "transferencia",
+      "transferencia bancaria",
+      "oxxo",
+      "deposito en oxxo"
+    ]);
 
-  // --------------------------------------------------------
-  // ENTREGA, PDF O PRODUCTO FÍSICO
-  // --------------------------------------------------------
-
-  if (
-    contieneAlguna(texto, [
-      "es fisico",
-      "libro fisico",
-      "producto fisico",
-      "formato fisico",
-      "es digital",
-      "libro digital",
-      "es pdf",
-      "archivo pdf",
-      "como lo recibo",
-      "cuando lo recibo",
-      "donde lo recibo",
-      "como se entrega",
-      "donde esta el libro",
-      "no encuentro el libro",
-      "no me llego",
-      "no lo recibi",
-      "envio",
-      "domicilio"
-    ])
-  ) {
-    return respuestaEntrega();
-  }
-
-  // --------------------------------------------------------
-  // PRECIO O MONTO
-  // --------------------------------------------------------
-
-  if (
-    contieneAlguna(texto, [
-      "cuanto cuesta",
-      "cuanto vale",
-      "que precio",
-      "precio",
-      "costo",
-      "cuanto pago",
-      "cuanto deposito",
-      "cuanto transfiero",
-      "cuanto hay que dar",
-      "cuanto debo pagar",
-      "de cuanto es el apoyo",
-      "cantidad"
-    ])
-  ) {
-    return respuestaPrecio();
+  if (preguntaPago) {
+    return {
+      intencion: "metodos_pago",
+      respuesta:
+        respuestaMetodosPago()
+    };
   }
 
   return null;
@@ -418,7 +867,9 @@ function respuestaDirecta(mensajeOriginal) {
 app.get("/", (req, res) => {
   return res
     .status(200)
-    .send("Bot ventas activo ✅");
+    .send(
+      "Agente de Enseña Sin Estrés activo ✅"
+    );
 });
 
 app.post("/mensaje", async (req, res) => {
@@ -430,19 +881,25 @@ app.post("/mensaje", async (req, res) => {
       "";
 
     const textoUsuario =
-      String(mensaje).trim();
+      String(mensaje ?? "").trim();
 
     console.log(
       "Mensaje recibido:",
       textoUsuario
+        ? `[contenido recibido: ${textoUsuario.length} caracteres]`
+        : "[vacío]"
     );
 
     if (!textoUsuario) {
+      console.log(
+        "Intención detectada: mensaje_vacio"
+      );
+
       return res.json({
         respuesta: [
           "Estoy aquí para ayudarte 😊",
           "",
-          "Puedes escribirme tu duda sobre el libro, la entrega o las formas de apoyo 🙏"
+          "Puedes escribirme tu duda sobre el Kit Anti-Pantallas, el Paquete Premium, la entrega o las formas de pago. 💛"
         ].join("\n")
       });
     }
@@ -452,11 +909,23 @@ app.post("/mensaje", async (req, res) => {
 
     if (directa) {
       const respuestaFinal =
-        limpiarRespuesta(directa);
+        directa.intencion ===
+        "datos_pago_por_confirmar"
+          ? limpiarRespuesta(
+              directa.respuesta
+            )
+          : agregarCierre(
+              directa.respuesta,
+              textoUsuario
+            );
 
       console.log(
-        "Respuesta directa enviada:",
-        respuestaFinal
+        "Intención detectada:",
+        directa.intencion
+      );
+
+      console.log(
+        `Respuesta enviada: base de conocimiento (${respuestaFinal.length} caracteres)`
       );
 
       return res.json({
@@ -464,63 +933,94 @@ app.post("/mensaje", async (req, res) => {
       });
     }
 
-    const response =
-      await openai.responses.create({
-        model: "gpt-4.1-mini",
-
-        temperature: 0.4,
-
-        input: [
-          {
-            role: "system",
-            content: [
-              {
-                type: "input_text",
-                text: SYSTEM_PROMPT
-              }
-            ]
-          },
-          {
-            role: "user",
-            content: [
-              {
-                type: "input_text",
-                text: textoUsuario
-              }
-            ]
-          }
-        ]
-      });
-
-    const respuestaIA =
-      response.output_text || "";
-
-    const respuestaFinal =
-      agregarCierre(respuestaIA);
-
     console.log(
-      "Respuesta enviada:",
-      respuestaFinal
+      "Intención detectada: consulta_abierta"
     );
 
-    return res.json({
-      respuesta: respuestaFinal
-    });
+    try {
+      const response =
+        await openai.responses.create({
+          model: "gpt-4.1-mini",
+
+          temperature: 0.3,
+
+          input: [
+            {
+              role: "system",
+              content: SYSTEM_PROMPT
+            },
+            {
+              role: "user",
+              content: textoUsuario
+            }
+          ]
+        });
+
+      const respuestaIA =
+        limpiarRespuesta(
+          response.output_text || ""
+        );
+
+      const respuestaBase =
+        respuestaIA ||
+        "Necesito confirmar ese dato con el equipo para darte información correcta. 💛";
+
+      const respuestaFinal =
+        agregarCierre(
+          respuestaBase,
+          textoUsuario
+        );
+
+      console.log(
+        `Respuesta enviada: OpenAI (${respuestaFinal.length} caracteres)`
+      );
+
+      return res.json({
+        respuesta: respuestaFinal
+      });
+    } catch (openaiError) {
+      console.error(
+        "Error de OpenAI en /mensaje:",
+        openaiError.message
+      );
+
+      return res.status(200).json({
+        respuesta:
+          "En este momento no pude procesar tu mensaje. Por favor, inténtalo nuevamente en unos minutos. 💛"
+      });
+    }
   } catch (error) {
     console.error(
       "Error en /mensaje:",
-      error
+      error.message
     );
 
-    return res.json({
-      respuesta: [
-        "Con mucho gusto te ayudo 😊",
-        "",
-        cierrePago()
-      ].join("\n")
+    return res.status(200).json({
+      respuesta:
+        "En este momento no pude procesar tu mensaje. Por favor, inténtalo nuevamente en unos minutos. 💛"
     });
   }
 });
+
+// ==========================================================
+// MANEJO DE ERRORES
+// ==========================================================
+
+app.use((error, req, res, next) => {
+  console.error(
+    "Error no controlado:",
+    error.message
+  );
+
+  return res.status(200).json({
+    respuesta:
+      "En este momento no pude procesar tu mensaje. Por favor, inténtalo nuevamente en unos minutos. 💛"
+  });
+});
+
+// ==========================================================
+// INICIAR SERVIDOR
+// ==========================================================
 
 app.listen(PORT, () => {
   console.log(
