@@ -230,6 +230,20 @@ en actividades sencillas de:
 
 Siempre adaptándolas a sus habilidades.
 
+ELECCIÓN DE PAQUETE:
+
+Si el cliente confirma que desea el Paquete Premium,
+debes reconocer su elección y guiarlo a elegir método de pago:
+
+- Transferencia bancaria.
+- Depósito en OXXO.
+
+Si el cliente confirma que desea el Kit Anti-Pantallas,
+debes reconocer su elección y guiarlo a elegir método de pago:
+
+- Transferencia bancaria.
+- Depósito en OXXO.
+
 OBJETIVO DE LA CONVERSACIÓN:
 
 Atender a clientes interesados.
@@ -278,6 +292,13 @@ function normalizarTexto(valor) {
 function contieneAlguna(texto, frases) {
   return frases.some((frase) =>
     texto.includes(normalizarTexto(frase))
+  );
+}
+
+function esIgualAAlguna(texto, frases) {
+  return frases.some(
+    (frase) =>
+      texto === normalizarTexto(frase)
   );
 }
 
@@ -438,6 +459,26 @@ function agregarCierre(
 // RESPUESTAS OFICIALES REUTILIZABLES
 // ==========================================================
 
+function respuestaEleccionPremium() {
+  return elegirAleatoria([
+    "💛 ¡Excelente elección! Elegiste el Paquete Premium por $130 MXN. ✨\n\n💳 ¿Cómo prefieres realizar tu pago: transferencia bancaria 🏦 o depósito en OXXO 🏪?",
+
+    "✨ Perfecto, elegiste el Paquete Premium por $130 MXN. 💛\n\n¿Prefieres realizar tu pago mediante transferencia bancaria 🏦 o depósito en OXXO 🏪?",
+
+    "💛 Perfecto 😊 Continuamos con el Paquete Premium de $130 MXN.\n\n💳 ¿Cómo prefieres pagar: transferencia bancaria 🏦 u OXXO 🏪?"
+  ]);
+}
+
+function respuestaEleccionAntipantallas() {
+  return elegirAleatoria([
+    "💛 ¡Excelente elección! Elegiste el Kit Anti-Pantallas por $99 MXN. ✨\n\n💳 ¿Cómo prefieres realizar tu pago: transferencia bancaria 🏦 o depósito en OXXO 🏪?",
+
+    "✨ Perfecto, elegiste el Kit Anti-Pantallas por $99 MXN. 💛\n\n¿Prefieres realizar tu pago mediante transferencia bancaria 🏦 o depósito en OXXO 🏪?",
+
+    "💛 Perfecto 😊 Continuamos con el Kit Anti-Pantallas de $99 MXN.\n\n💳 ¿Cómo prefieres pagar: transferencia bancaria 🏦 u OXXO 🏪?"
+  ]);
+}
+
 function respuestaDatosPagoNoDisponibles() {
   return elegirAleatoria([
     "💛 Para darte los datos correctos de transferencia u OXXO, necesito confirmar esa información con el equipo.",
@@ -563,9 +604,61 @@ function respuestaDirecta(
   }
 
   // --------------------------------------------------------
+  // ELECCIÓN PAQUETE PREMIUM
+  // --------------------------------------------------------
+
+  const eleccionPremium =
+    esIgualAAlguna(texto, [
+      "premium",
+      "paquete premium",
+      "el premium",
+      "quiero premium",
+      "quiero el premium",
+      "quiero el paquete premium",
+      "me quedo con premium",
+      "me quedo con el premium",
+      "prefiero premium",
+      "prefiero el premium"
+    ]);
+
+  if (eleccionPremium) {
+    return {
+      intencion: "eleccion_paquete_premium",
+      respuesta: respuestaEleccionPremium()
+    };
+  }
+
+  // --------------------------------------------------------
+  // ELECCIÓN KIT ANTI-PANTALLAS
+  // --------------------------------------------------------
+
+  const eleccionAntipantallas =
+    esIgualAAlguna(texto, [
+      "anti-pantallas",
+      "anti pantallas",
+      "antipantallas",
+      "kit anti-pantallas",
+      "kit anti pantallas",
+      "kit antipantallas",
+      "quiero anti-pantallas",
+      "quiero anti pantallas",
+      "quiero el kit anti-pantallas",
+      "quiero el kit anti pantallas",
+      "me quedo con anti-pantallas",
+      "me quedo con anti pantallas",
+      "prefiero anti-pantallas",
+      "prefiero anti pantallas"
+    ]);
+
+  if (eleccionAntipantallas) {
+    return {
+      intencion: "eleccion_kit_antipantallas",
+      respuesta: respuestaEleccionAntipantallas()
+    };
+  }
+
+  // --------------------------------------------------------
   // 2 AÑOS
-  // Keyword oficial: "2 años"
-  // Intención específica, se evalúa primero.
   // --------------------------------------------------------
 
   const preguntaDosAnos =
@@ -587,7 +680,6 @@ function respuestaDirecta(
 
   // --------------------------------------------------------
   // KIT PEQUEÑOS GENIOS
-  // Keyword oficial: "genios"
   // --------------------------------------------------------
 
   const preguntaGenios =
@@ -610,7 +702,6 @@ function respuestaDirecta(
 
   // --------------------------------------------------------
   // MATERIAL FÍSICO / DIGITAL
-  // Keyword oficial: "fisico"
   // --------------------------------------------------------
 
   const preguntaFisico =
@@ -636,7 +727,6 @@ function respuestaDirecta(
 
   // --------------------------------------------------------
   // TIEMPO DE DESCARGA
-  // Keyword oficial: "descarga"
   // --------------------------------------------------------
 
   const preguntaDescarga =
@@ -660,7 +750,6 @@ function respuestaDirecta(
 
   // --------------------------------------------------------
   // ¿ES SOLO UN LIBRO?
-  // Keyword oficial: "libro"
   // --------------------------------------------------------
 
   const preguntaLibro =
@@ -683,8 +772,6 @@ function respuestaDirecta(
 
   // --------------------------------------------------------
   // ENTREGA
-  // Keyword oficial: "entrega"
-  // Se evalúa antes de la intención genérica de pago.
   // --------------------------------------------------------
 
   const preguntaEntrega =
@@ -714,7 +801,6 @@ function respuestaDirecta(
 
   // --------------------------------------------------------
   // SEGURIDAD / CONFIANZA
-  // Keyword oficial: "seguro"
   // --------------------------------------------------------
 
   const preguntaSeguridad =
@@ -743,7 +829,6 @@ function respuestaDirecta(
 
   // --------------------------------------------------------
   // PRECIO
-  // Keyword oficial: "precio"
   // --------------------------------------------------------
 
   const preguntaPrecio =
@@ -769,7 +854,6 @@ function respuestaDirecta(
 
   // --------------------------------------------------------
   // CONTENIDO DEL KIT ANTI-PANTALLAS
-  // Keyword oficial: "actividades"
   // --------------------------------------------------------
 
   const preguntaActividades =
@@ -795,7 +879,6 @@ function respuestaDirecta(
 
   // --------------------------------------------------------
   // DATOS ESPECÍFICOS DE PAGO NO DISPONIBLES
-  // Evita inventar cuenta, CLABE, tarjeta, código o QR.
   // --------------------------------------------------------
 
   const preguntaDatosPago =
@@ -828,9 +911,6 @@ function respuestaDirecta(
 
   // --------------------------------------------------------
   // MÉTODOS DE PAGO
-  // Keyword oficial: "pago"
-  // Se evalúa después de entrega para evitar confundir
-  // "después del pago, ¿cuándo me llega?"
   // --------------------------------------------------------
 
   const preguntaPago =
@@ -908,9 +988,17 @@ app.post("/mensaje", async (req, res) => {
       respuestaDirecta(textoUsuario);
 
     if (directa) {
-      const respuestaFinal =
+
+      const noAgregarCierre =
         directa.intencion ===
-        "datos_pago_por_confirmar"
+          "datos_pago_por_confirmar" ||
+        directa.intencion ===
+          "eleccion_paquete_premium" ||
+        directa.intencion ===
+          "eleccion_kit_antipantallas";
+
+      const respuestaFinal =
+        noAgregarCierre
           ? limpiarRespuesta(
               directa.respuesta
             )
