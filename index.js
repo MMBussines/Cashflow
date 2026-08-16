@@ -92,6 +92,9 @@ REGLAS OBLIGATORIAS:
   en esta información oficial.
 - Cuando respondas una pregunta concreta,
   contesta únicamente lo necesario.
+- Una pregunta sobre un producto NO significa que el cliente ya lo eligió.
+- Solo considera una elección de paquete cuando el mensaje confirme claramente
+  que quiere o prefiere ese paquete.
 
 INFORMACIÓN OFICIAL DEL NEGOCIO:
 
@@ -297,8 +300,7 @@ function contieneAlguna(texto, frases) {
 
 function esIgualAAlguna(texto, frases) {
   return frases.some(
-    (frase) =>
-      texto === normalizarTexto(frase)
+    (frase) => texto === normalizarTexto(frase)
   );
 }
 
@@ -325,9 +327,7 @@ function limpiarRespuesta(valor) {
 function cierrePaquete() {
   return elegirAleatoria([
     "💛 ¿Cuál prefieres para tu peque: Kit Anti-Pantallas o Paquete Premium?",
-
     "😊 Si deseas continuar, ¿cuál opción prefieres: Kit Anti-Pantallas o Paquete Premium?",
-
     "✨ ¿Te gustaría continuar con el Kit Anti-Pantallas o con el Paquete Premium?"
   ]);
 }
@@ -335,9 +335,7 @@ function cierrePaquete() {
 function cierreMetodoPago() {
   return elegirAleatoria([
     "💳 Puedes continuar por transferencia bancaria 🏦 o depósito en OXXO 🏪. ¿Cuál prefieres? 😊",
-
     "💛 Para continuar, puedes elegir transferencia bancaria 🏦 o depósito en OXXO 🏪. ¿Cuál opción prefieres?",
-
     "😊 El siguiente paso es elegir tu método de pago: transferencia bancaria 🏦 u OXXO 🏪."
   ]);
 }
@@ -362,6 +360,8 @@ function debeAgregarCierre(textoNormalizado) {
       "cuanto vale",
       "costo",
       "que incluye",
+      "que contiene",
+      "que trae",
       "incluye el kit",
       "actividades",
       "pequenos genios",
@@ -398,10 +398,7 @@ function debeAgregarCierre(textoNormalizado) {
   return null;
 }
 
-function agregarCierre(
-  respuesta,
-  mensajeOriginal
-) {
+function agregarCierre(respuesta, mensajeOriginal) {
   const respuestaLimpia =
     limpiarRespuesta(respuesta);
 
@@ -422,25 +419,13 @@ function agregarCierre(
     normalizarTexto(respuestaLimpia);
 
   const yaIncluyeCierre =
-    normalizada.includes(
-      "cual prefieres"
-    ) ||
-    normalizada.includes(
-      "cual opcion prefieres"
-    ) ||
-    normalizada.includes(
-      "puedes elegir entre el kit"
-    ) ||
+    normalizada.includes("cual prefieres") ||
+    normalizada.includes("cual opcion prefieres") ||
+    normalizada.includes("puedes elegir entre el kit") ||
     (
-      normalizada.includes(
-        "transferencia bancaria"
-      ) &&
-      normalizada.includes(
-        "deposito en oxxo"
-      ) &&
-      normalizada.includes(
-        "prefieres"
-      )
+      normalizada.includes("transferencia bancaria") &&
+      normalizada.includes("deposito en oxxo") &&
+      normalizada.includes("prefieres")
     );
 
   if (yaIncluyeCierre) {
@@ -462,9 +447,7 @@ function agregarCierre(
 function respuestaEleccionPremium() {
   return elegirAleatoria([
     "💛 ¡Excelente elección! Elegiste el Paquete Premium por $130 MXN. ✨\n\n💳 ¿Cómo prefieres realizar tu pago: transferencia bancaria 🏦 o depósito en OXXO 🏪?",
-
     "✨ Perfecto, elegiste el Paquete Premium por $130 MXN. 💛\n\n¿Prefieres realizar tu pago mediante transferencia bancaria 🏦 o depósito en OXXO 🏪?",
-
     "💛 Perfecto 😊 Continuamos con el Paquete Premium de $130 MXN.\n\n💳 ¿Cómo prefieres pagar: transferencia bancaria 🏦 u OXXO 🏪?"
   ]);
 }
@@ -472,19 +455,23 @@ function respuestaEleccionPremium() {
 function respuestaEleccionAntipantallas() {
   return elegirAleatoria([
     "💛 ¡Excelente elección! Elegiste el Kit Anti-Pantallas por $99 MXN. ✨\n\n💳 ¿Cómo prefieres realizar tu pago: transferencia bancaria 🏦 o depósito en OXXO 🏪?",
-
     "✨ Perfecto, elegiste el Kit Anti-Pantallas por $99 MXN. 💛\n\n¿Prefieres realizar tu pago mediante transferencia bancaria 🏦 o depósito en OXXO 🏪?",
-
     "💛 Perfecto 😊 Continuamos con el Kit Anti-Pantallas de $99 MXN.\n\n💳 ¿Cómo prefieres pagar: transferencia bancaria 🏦 u OXXO 🏪?"
+  ]);
+}
+
+function respuestaContenidoPremium() {
+  return elegirAleatoria([
+    "💛 El Paquete Premium incluye el Kit Anti-Pantallas, el Kit Pequeños Genios, la Biblioteca Premium de Refuerzo Escolar y todos los bonos. 📚✨ Además, tienes acceso de por vida.",
+    "📚✨ El Paquete Premium incluye Kit Anti-Pantallas + Kit Pequeños Genios + Biblioteca Premium de Refuerzo Escolar + todos los bonos, con acceso de por vida. 💛",
+    "💛 Con el Paquete Premium recibes el Kit Anti-Pantallas, el Kit Pequeños Genios, la Biblioteca Premium de Refuerzo Escolar y todos los bonos. ✨ El acceso es de por vida."
   ]);
 }
 
 function respuestaDatosPagoNoDisponibles() {
   return elegirAleatoria([
     "💛 Para darte los datos correctos de transferencia u OXXO, necesito confirmar esa información con el equipo.",
-
     "😊 Necesito confirmar con el equipo los datos específicos de pago para compartirte la información correcta. 💛",
-
     "💛 Los datos específicos de cuenta, CLABE, tarjeta, código o QR no están disponibles en mi información autorizada. Necesito confirmarlos con el equipo."
   ]);
 }
@@ -492,9 +479,7 @@ function respuestaDatosPagoNoDisponibles() {
 function respuestaMetodosPago() {
   return elegirAleatoria([
     "💳 Puedes realizar tu pago mediante transferencia bancaria 🏦 o depósito en OXXO 🏪✨.",
-
     "💛 Aceptamos pago mediante transferencia bancaria 🏦 o depósito en OXXO 🏪✨.",
-
     "😊 Puedes pagar por transferencia bancaria 🏦 o mediante depósito en OXXO 🏪. 💳✨"
   ]);
 }
@@ -502,9 +487,7 @@ function respuestaMetodosPago() {
 function respuestaEntrega() {
   return elegirAleatoria([
     "📄 En cuanto se confirme tu pago, recibirás inmediatamente una Guía de Acceso en PDF con las instrucciones y enlaces para acceder y descargar tus materiales. 🔗📚✨",
-
     "💛 Una vez confirmado tu pago, recibirás inmediatamente una Guía de Acceso en PDF que contiene las instrucciones y enlaces para entrar y descargar tus materiales. 📄🔗",
-
     "📲 Al confirmarse tu pago, recibirás inmediatamente una Guía de Acceso en PDF con las instrucciones y enlaces necesarios para acceder y descargar tus materiales. 💛✨"
   ]);
 }
@@ -512,9 +495,7 @@ function respuestaEntrega() {
 function respuestaSeguridad() {
   return elegirAleatoria([
     "💛 ¡Claro! 😊 Llevamos tiempo trabajando con madres, padres, docentes y profesionales. Gracias a Dios no hemos tenido inconvenientes con la entrega de nuestros materiales. 🙏✨ Al final, la decisión de confiar en nosotros es completamente tuya. 🤍",
-
     "💛 Llevamos tiempo trabajando con madres, padres, docentes y profesionales y, gracias a Dios, no hemos tenido inconvenientes con la entrega de nuestros materiales. 🙏✨ La decisión de confiar en nosotros es completamente tuya. 😊",
-
     "😊💛 Hemos trabajado con madres, padres, docentes y profesionales y, gracias a Dios, no hemos tenido inconvenientes con nuestras entregas. 🙏✨ Al final, la decisión de confiar en nosotros siempre es completamente tuya. 🤍"
   ]);
 }
@@ -522,9 +503,7 @@ function respuestaSeguridad() {
 function respuestaDosAnos() {
   return elegirAleatoria([
     "💛 Nuestro material está recomendado para pequeños de 3 a 8 años. 😊 Sin embargo, algunas mamás nos cuentan que también lo utilizan con sus pequeños de 2 años, especialmente en actividades sencillas de trazos, motricidad, coloreado y recortables, siempre adaptándolas a sus habilidades. 🎨✂️✨",
-
     "💛 El material está recomendado para pequeños de 3 a 8 años. 😊 Algunas mamás también lo utilizan con pequeños de 2 años en actividades sencillas como trazos, motricidad, coloreado y recortables, adaptándolas siempre a sus habilidades. 🎨✂️✨",
-
     "😊 La edad recomendada es de 3 a 8 años. 💛 Aun así, algunas mamás nos cuentan que con pequeños de 2 años usan actividades sencillas de trazos, motricidad, coloreado y recortables, siempre ajustándolas a sus habilidades. 🎨✨"
   ]);
 }
@@ -532,9 +511,7 @@ function respuestaDosAnos() {
 function respuestaFisico() {
   return elegirAleatoria([
     "📲 No. Es un producto 100% digital, en formato PDF listo para descargar e imprimir. 🖨️✨",
-
     "📲 El material no es físico; es 100% digital y está en formato PDF listo para descargar e imprimir. 🖨️✨",
-
     "💛 Es un producto completamente digital en formato PDF, listo para descargar e imprimir. No es material físico. 📲🖨️"
   ]);
 }
@@ -542,9 +519,7 @@ function respuestaFisico() {
 function respuestaDescarga() {
   return elegirAleatoria([
     "⏰ No hay límite. Tu acceso es permanente y puedes descargar los archivos cuando lo necesites. 📚✨",
-
     "💛 No tienes límite de tiempo para descargarlo. El acceso es permanente y puedes descargar los archivos cuando lo necesites. 📚✨",
-
     "📚 Tu acceso es permanente, así que no hay límite de tiempo para descargar los archivos. Puedes hacerlo cuando lo necesites. ⏰✨"
   ]);
 }
@@ -552,9 +527,7 @@ function respuestaDescarga() {
 function respuestaLibro() {
   return elegirAleatoria([
     "💛 No. Recibes una biblioteca digital completa con cuadernillos, actividades y diferentes recursos organizados por categorías. 📚🧩",
-
     "📚 No es solo un libro. Recibes una biblioteca digital completa con cuadernillos, actividades y distintos recursos organizados por categorías. 💛🧩",
-
     "💛 Recibes mucho más que un solo libro: es una biblioteca digital con cuadernillos, actividades y diferentes recursos organizados por categorías. 📚✨"
   ]);
 }
@@ -562,9 +535,7 @@ function respuestaLibro() {
 function respuestaKitAntipantallas() {
   return elegirAleatoria([
     "🎨 El Kit Anti-Pantallas incluye juegos, desafíos, recortables, motricidad, inteligencia emocional, coloreables, cuadernillos y más de 500 actividades, además de todos los bonos. 🎁✨",
-
     "🎨 Incluye juegos, desafíos, recortables, motricidad, inteligencia emocional, coloreables, cuadernillos y más de 500 actividades, además de todos los bonos. 🎁✨",
-
     "💛 En el Kit Anti-Pantallas encontrarás juegos, desafíos, recortables, motricidad, inteligencia emocional, coloreables, cuadernillos y más de 500 actividades, además de todos los bonos. 🎨🎁"
   ]);
 }
@@ -572,9 +543,7 @@ function respuestaKitAntipantallas() {
 function respuestaPequenosGenios() {
   return elegirAleatoria([
     "📚 El Kit Pequeños Genios incluye actividades de Lectoescritura, Pensamiento Matemático y Lógica, listas para imprimir. ✏️🔢🧩",
-
     "📚 Pequeños Genios incluye actividades listas para imprimir de Lectoescritura, Pensamiento Matemático y Lógica. ✏️🔢🧩",
-
     "✏️📚 El Kit Pequeños Genios contiene actividades de Lectoescritura, Pensamiento Matemático y Lógica, todas listas para imprimir. 🔢🧩"
   ]);
 }
@@ -582,9 +551,7 @@ function respuestaPequenosGenios() {
 function respuestaPrecio() {
   return elegirAleatoria([
     `💛 El ${NEGOCIO.productos.kitAntipantallas.nombre} cuesta $${NEGOCIO.productos.kitAntipantallas.precio} MXN. También puedes adquirir el ${NEGOCIO.productos.paquetePremium.nombre} por $${NEGOCIO.productos.paquetePremium.precio} MXN. ✨`,
-
     `💛 El precio del ${NEGOCIO.productos.kitAntipantallas.nombre} es de $${NEGOCIO.productos.kitAntipantallas.precio} MXN y el ${NEGOCIO.productos.paquetePremium.nombre} tiene un costo de $${NEGOCIO.productos.paquetePremium.precio} MXN. ✨`,
-
     `✨ Puedes elegir el ${NEGOCIO.productos.kitAntipantallas.nombre} por $${NEGOCIO.productos.kitAntipantallas.precio} MXN o el ${NEGOCIO.productos.paquetePremium.nombre} por $${NEGOCIO.productos.paquetePremium.precio} MXN. 💛`
   ]);
 }
@@ -593,9 +560,7 @@ function respuestaPrecio() {
 // RESPUESTAS DIRECTAS
 // ==========================================================
 
-function respuestaDirecta(
-  mensajeOriginal
-) {
+function respuestaDirecta(mensajeOriginal) {
   const texto =
     normalizarTexto(mensajeOriginal);
 
@@ -604,7 +569,34 @@ function respuestaDirecta(
   }
 
   // --------------------------------------------------------
-  // ELECCIÓN PAQUETE PREMIUM
+  // CONTENIDO DEL PAQUETE PREMIUM
+  // --------------------------------------------------------
+
+  const preguntaContenidoPremium =
+    contieneAlguna(texto, [
+      "que incluye el premium",
+      "que incluye premium",
+      "que incluye el paquete premium",
+      "que contiene el premium",
+      "que contiene premium",
+      "que contiene el paquete premium",
+      "que trae el premium",
+      "que trae premium",
+      "que trae el paquete premium",
+      "contenido del premium",
+      "contenido del paquete premium"
+    ]);
+
+  if (preguntaContenidoPremium) {
+    return {
+      intencion: "contenido_paquete_premium",
+      paquete_elegido: "ninguno",
+      respuesta: respuestaContenidoPremium()
+    };
+  }
+
+  // --------------------------------------------------------
+  // ELECCIÓN PREMIUM
   // --------------------------------------------------------
 
   const eleccionPremium =
@@ -617,19 +609,27 @@ function respuestaDirecta(
       "quiero el paquete premium",
       "me quedo con premium",
       "me quedo con el premium",
+      "me quedo con el paquete premium",
       "prefiero premium",
-      "prefiero el premium"
+      "prefiero el premium",
+      "prefiero el paquete premium",
+      "elijo premium",
+      "elijo el premium",
+      "elijo el paquete premium",
+      "quiero ese premium",
+      "quiero ese paquete"
     ]);
 
   if (eleccionPremium) {
     return {
       intencion: "eleccion_paquete_premium",
+      paquete_elegido: "premium",
       respuesta: respuestaEleccionPremium()
     };
   }
 
   // --------------------------------------------------------
-  // ELECCIÓN KIT ANTI-PANTALLAS
+  // ELECCIÓN ANTI-PANTALLAS
   // --------------------------------------------------------
 
   const eleccionAntipantallas =
@@ -642,24 +642,28 @@ function respuestaDirecta(
       "kit antipantallas",
       "quiero anti-pantallas",
       "quiero anti pantallas",
+      "quiero antipantallas",
       "quiero el kit anti-pantallas",
       "quiero el kit anti pantallas",
+      "quiero el kit antipantallas",
       "me quedo con anti-pantallas",
       "me quedo con anti pantallas",
+      "me quedo con antipantallas",
       "prefiero anti-pantallas",
-      "prefiero anti pantallas"
+      "prefiero anti pantallas",
+      "prefiero antipantallas",
+      "elijo anti-pantallas",
+      "elijo anti pantallas",
+      "elijo antipantallas"
     ]);
 
   if (eleccionAntipantallas) {
     return {
       intencion: "eleccion_kit_antipantallas",
+      paquete_elegido: "antipantallas",
       respuesta: respuestaEleccionAntipantallas()
     };
   }
-
-  // --------------------------------------------------------
-  // 2 AÑOS
-  // --------------------------------------------------------
 
   const preguntaDosAnos =
     contieneAlguna(texto, [
@@ -674,13 +678,10 @@ function respuestaDirecta(
   if (preguntaDosAnos) {
     return {
       intencion: "edad_2_anos",
+      paquete_elegido: "ninguno",
       respuesta: respuestaDosAnos()
     };
   }
-
-  // --------------------------------------------------------
-  // KIT PEQUEÑOS GENIOS
-  // --------------------------------------------------------
 
   const preguntaGenios =
     contieneAlguna(texto, [
@@ -695,14 +696,10 @@ function respuestaDirecta(
   if (preguntaGenios) {
     return {
       intencion: "kit_pequenos_genios",
-      respuesta:
-        respuestaPequenosGenios()
+      paquete_elegido: "ninguno",
+      respuesta: respuestaPequenosGenios()
     };
   }
-
-  // --------------------------------------------------------
-  // MATERIAL FÍSICO / DIGITAL
-  // --------------------------------------------------------
 
   const preguntaFisico =
     contieneAlguna(texto, [
@@ -721,13 +718,10 @@ function respuestaDirecta(
   if (preguntaFisico) {
     return {
       intencion: "material_fisico",
+      paquete_elegido: "ninguno",
       respuesta: respuestaFisico()
     };
   }
-
-  // --------------------------------------------------------
-  // TIEMPO DE DESCARGA
-  // --------------------------------------------------------
 
   const preguntaDescarga =
     contieneAlguna(texto, [
@@ -744,13 +738,10 @@ function respuestaDirecta(
   if (preguntaDescarga) {
     return {
       intencion: "tiempo_descarga",
+      paquete_elegido: "ninguno",
       respuesta: respuestaDescarga()
     };
   }
-
-  // --------------------------------------------------------
-  // ¿ES SOLO UN LIBRO?
-  // --------------------------------------------------------
 
   const preguntaLibro =
     contieneAlguna(texto, [
@@ -764,15 +755,11 @@ function respuestaDirecta(
 
   if (preguntaLibro) {
     return {
-      intencion:
-        "biblioteca_no_libro",
+      intencion: "biblioteca_no_libro",
+      paquete_elegido: "ninguno",
       respuesta: respuestaLibro()
     };
   }
-
-  // --------------------------------------------------------
-  // ENTREGA
-  // --------------------------------------------------------
 
   const preguntaEntrega =
     contieneAlguna(texto, [
@@ -795,13 +782,10 @@ function respuestaDirecta(
   if (preguntaEntrega) {
     return {
       intencion: "entrega",
+      paquete_elegido: "ninguno",
       respuesta: respuestaEntrega()
     };
   }
-
-  // --------------------------------------------------------
-  // SEGURIDAD / CONFIANZA
-  // --------------------------------------------------------
 
   const preguntaSeguridad =
     contieneAlguna(texto, [
@@ -820,16 +804,11 @@ function respuestaDirecta(
 
   if (preguntaSeguridad) {
     return {
-      intencion:
-        "seguridad_compra",
-      respuesta:
-        respuestaSeguridad()
+      intencion: "seguridad_compra",
+      paquete_elegido: "ninguno",
+      respuesta: respuestaSeguridad()
     };
   }
-
-  // --------------------------------------------------------
-  // PRECIO
-  // --------------------------------------------------------
 
   const preguntaPrecio =
     contieneAlguna(texto, [
@@ -848,13 +827,10 @@ function respuestaDirecta(
   if (preguntaPrecio) {
     return {
       intencion: "precio",
+      paquete_elegido: "ninguno",
       respuesta: respuestaPrecio()
     };
   }
-
-  // --------------------------------------------------------
-  // CONTENIDO DEL KIT ANTI-PANTALLAS
-  // --------------------------------------------------------
 
   const preguntaActividades =
     contieneAlguna(texto, [
@@ -870,16 +846,11 @@ function respuestaDirecta(
 
   if (preguntaActividades) {
     return {
-      intencion:
-        "contenido_kit_antipantallas",
-      respuesta:
-        respuestaKitAntipantallas()
+      intencion: "contenido_kit_antipantallas",
+      paquete_elegido: "ninguno",
+      respuesta: respuestaKitAntipantallas()
     };
   }
-
-  // --------------------------------------------------------
-  // DATOS ESPECÍFICOS DE PAGO NO DISPONIBLES
-  // --------------------------------------------------------
 
   const preguntaDatosPago =
     contieneAlguna(texto, [
@@ -902,16 +873,11 @@ function respuestaDirecta(
 
   if (preguntaDatosPago) {
     return {
-      intencion:
-        "datos_pago_por_confirmar",
-      respuesta:
-        respuestaDatosPagoNoDisponibles()
+      intencion: "datos_pago_por_confirmar",
+      paquete_elegido: "ninguno",
+      respuesta: respuestaDatosPagoNoDisponibles()
     };
   }
-
-  // --------------------------------------------------------
-  // MÉTODOS DE PAGO
-  // --------------------------------------------------------
 
   const preguntaPago =
     contieneAlguna(texto, [
@@ -932,8 +898,8 @@ function respuestaDirecta(
   if (preguntaPago) {
     return {
       intencion: "metodos_pago",
-      respuesta:
-        respuestaMetodosPago()
+      paquete_elegido: "ninguno",
+      respuesta: respuestaMetodosPago()
     };
   }
 
@@ -971,16 +937,10 @@ app.post("/mensaje", async (req, res) => {
     );
 
     if (!textoUsuario) {
-      console.log(
-        "Intención detectada: mensaje_vacio"
-      );
-
       return res.json({
-        respuesta: [
-          "Estoy aquí para ayudarte 😊",
-          "",
-          "Puedes escribirme tu duda sobre el Kit Anti-Pantallas, el Paquete Premium, la entrega o las formas de pago. 💛"
-        ].join("\n")
+        respuesta:
+          "Estoy aquí para ayudarte 😊\n\nPuedes escribirme tu duda sobre el Kit Anti-Pantallas, el Paquete Premium, la entrega o las formas de pago. 💛",
+        paquete_elegido: "ninguno"
       });
     }
 
@@ -988,20 +948,14 @@ app.post("/mensaje", async (req, res) => {
       respuestaDirecta(textoUsuario);
 
     if (directa) {
-
       const noAgregarCierre =
-        directa.intencion ===
-          "datos_pago_por_confirmar" ||
-        directa.intencion ===
-          "eleccion_paquete_premium" ||
-        directa.intencion ===
-          "eleccion_kit_antipantallas";
+        directa.intencion === "datos_pago_por_confirmar" ||
+        directa.intencion === "eleccion_paquete_premium" ||
+        directa.intencion === "eleccion_kit_antipantallas";
 
       const respuestaFinal =
         noAgregarCierre
-          ? limpiarRespuesta(
-              directa.respuesta
-            )
+          ? limpiarRespuesta(directa.respuesta)
           : agregarCierre(
               directa.respuesta,
               textoUsuario
@@ -1013,25 +967,22 @@ app.post("/mensaje", async (req, res) => {
       );
 
       console.log(
-        `Respuesta enviada: base de conocimiento (${respuestaFinal.length} caracteres)`
+        "Paquete elegido:",
+        directa.paquete_elegido || "ninguno"
       );
 
       return res.json({
-        respuesta: respuestaFinal
+        respuesta: respuestaFinal,
+        paquete_elegido:
+          directa.paquete_elegido || "ninguno"
       });
     }
-
-    console.log(
-      "Intención detectada: consulta_abierta"
-    );
 
     try {
       const response =
         await openai.responses.create({
           model: "gpt-4.1-mini",
-
           temperature: 0.3,
-
           input: [
             {
               role: "system",
@@ -1059,12 +1010,9 @@ app.post("/mensaje", async (req, res) => {
           textoUsuario
         );
 
-      console.log(
-        `Respuesta enviada: OpenAI (${respuestaFinal.length} caracteres)`
-      );
-
       return res.json({
-        respuesta: respuestaFinal
+        respuesta: respuestaFinal,
+        paquete_elegido: "ninguno"
       });
     } catch (openaiError) {
       console.error(
@@ -1074,7 +1022,8 @@ app.post("/mensaje", async (req, res) => {
 
       return res.status(200).json({
         respuesta:
-          "En este momento no pude procesar tu mensaje. Por favor, inténtalo nuevamente en unos minutos. 💛"
+          "En este momento no pude procesar tu mensaje. Por favor, inténtalo nuevamente en unos minutos. 💛",
+        paquete_elegido: "ninguno"
       });
     }
   } catch (error) {
@@ -1085,7 +1034,8 @@ app.post("/mensaje", async (req, res) => {
 
     return res.status(200).json({
       respuesta:
-        "En este momento no pude procesar tu mensaje. Por favor, inténtalo nuevamente en unos minutos. 💛"
+        "En este momento no pude procesar tu mensaje. Por favor, inténtalo nuevamente en unos minutos. 💛",
+      paquete_elegido: "ninguno"
     });
   }
 });
@@ -1102,7 +1052,8 @@ app.use((error, req, res, next) => {
 
   return res.status(200).json({
     respuesta:
-      "En este momento no pude procesar tu mensaje. Por favor, inténtalo nuevamente en unos minutos. 💛"
+      "En este momento no pude procesar tu mensaje. Por favor, inténtalo nuevamente en unos minutos. 💛",
+    paquete_elegido: "ninguno"
   });
 });
 
