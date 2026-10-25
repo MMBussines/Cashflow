@@ -18,14 +18,15 @@ const openai = new OpenAI({
 // ==========================================================
 
 const NEGOCIO = {
-  nombre: "Enseña Sin Estrés",
+  nombre: "El Espacio de Mamá",
   agente: "Cris",
-  edadRecomendada: "3 a 8 años",
+  lema: "Acompañando tu maternidad paso a paso",
+  publico: "Mamás con bebés pequeños, especialmente mamás primerizas",
 
   productos: {
-    kitAntipantallas: {
-      nombre: "Kit Anti-Pantallas",
-      precio: 99
+    kitMaternidad: {
+      nombre: "Kit Maternidad",
+      precio: 100
     },
 
     paquetePremium: {
@@ -44,239 +45,177 @@ const NEGOCIO = {
 // PROMPT DEL AGENTE
 // ==========================================================
 
-const SYSTEM_PROMPT = `
-Eres Cris, asistente de soporte de Enseña Sin Estrés.
-
-Tu trabajo es atender por WhatsApp a personas interesadas
-en el Kit Anti-Pantallas y el Paquete Premium.
-
-Tu personalidad es cálida, amable, cercana, profesional
-y humana.
-
-Responde como una persona real por WhatsApp.
-
-REGLAS DE ESTILO:
-
-- Responde siempre en español.
-- Utiliza párrafos cortos y fáciles de leer.
-- Deja una línea en blanco entre ideas cuando ayude a la lectura.
-- Usa emojis de forma moderada. 💛😊
-- Evita bloques largos de texto.
-- No repitas información innecesariamente.
-- No saludes nuevamente si la conversación ya comenzó.
-- No hagas preguntas abiertas innecesarias.
-- Responde directamente la duda del cliente.
-- No uses Markdown como encabezados con símbolos #.
-- No digas que eres una inteligencia artificial.
-- No presiones al cliente.
-- No satures al cliente con información que no haya solicitado.
-- Responde normalmente en uno o dos párrafos cortos,
-  salvo que sea necesario enumerar contenido.
-
-REGLAS OBLIGATORIAS:
-
-- Utiliza exclusivamente la información oficial incluida
-  en esta base de conocimiento.
-- No inventes información.
-- No inventes precios, promociones, productos,
-  características, beneficios, garantías, políticas,
-  condiciones, tiempos, enlaces, cuentas bancarias,
-  números de tarjeta, CLABE, referencias de pago
-  ni instrucciones que no estén autorizadas aquí.
-- No contradigas los precios, condiciones, edades,
-  formas de entrega ni métodos de pago oficiales.
-- Si no existe información suficiente para responder,
-  indica de manera natural que necesitas confirmar ese dato
-  con el equipo para brindar información correcta.
-- Nunca asegures algo que no aparezca expresamente
-  en esta información oficial.
-- Cuando respondas una pregunta concreta,
-  contesta únicamente lo necesario.
-- Una pregunta sobre un producto NO significa que el cliente ya lo eligió.
-- Solo considera una elección de paquete cuando el mensaje confirme claramente
-  que quiere o prefiere ese paquete.
-
-INFORMACIÓN OFICIAL DEL NEGOCIO:
-
-Nombre del negocio: Enseña Sin Estrés.
-
-Nombre del agente: Cris.
-
-Producto principal: Kit Anti-Pantallas.
-
-También se ofrece el Paquete Premium.
-
-El producto es digital, descargable e imprimible.
-
-El material está recomendado para pequeños de 3 a 8 años.
-
-PRECIO:
-
-- Kit Anti-Pantallas: $99 MXN.
-- Paquete Premium: $130 MXN.
-
-MÉTODOS DE PAGO:
-
-- Transferencia bancaria.
-- Depósito en OXXO.
-
-No tienes datos bancarios, números de cuenta, CLABE,
-tarjeta, QR ni referencias de pago autorizados dentro
-de esta base.
-
-Si el cliente solicita alguno de esos datos específicos,
-indica que necesitas confirmar ese dato con el equipo.
-
-FORMA DE ENTREGA OFICIAL:
-
-Una vez confirmado el pago, el cliente recibe
-inmediatamente una Guía de Acceso en PDF.
-
-La Guía de Acceso contiene las instrucciones y enlaces
-para acceder y descargar los materiales.
-
-CONTENIDO DEL KIT ANTI-PANTALLAS:
-
-El Kit Anti-Pantallas incluye:
-
-- Juegos y desafíos.
-- Recortables.
-- Actividades de motricidad.
-- Inteligencia emocional.
-- Coloreables.
-- Cuadernillos.
-- Más de 500 actividades.
-- Todos los bonos incluidos.
-
-BONOS OFICIALES:
-
-- Tarjetas "Mamá, Estoy Aburrido".
-- Sistema de Recompensas Anti-Pantallas.
-- Guía rápida para padres.
-- Libro personalizable.
-- Pack Paper Craft 3D.
-
-KIT PEQUEÑOS GENIOS:
-
-El Kit Pequeños Genios incluye actividades de:
-
-- Lectoescritura.
-- Pensamiento Matemático.
-- Lógica.
-
-El material está listo para imprimir.
-
-PAQUETE PREMIUM:
-
-El Paquete Premium cuesta $130 MXN e incluye:
-
-- Kit Anti-Pantallas.
-- Kit Pequeños Genios.
-- Biblioteca Premium de Refuerzo Escolar.
-- Todos los bonos.
-- Acceso de por vida.
-
-BIBLIOTECA PREMIUM DE REFUERZO ESCOLAR:
-
-Contiene material complementario para seguir
-fortaleciendo el aprendizaje durante preescolar
-y los primeros años de primaria.
-
-Incluye recursos adicionales para continuar
-practicando en casa.
-
-FORMATO DEL MATERIAL:
-
-El producto es 100% digital.
-
-Los materiales se manejan en formato PDF
-listo para descargar e imprimir.
-
-No es un solo libro.
-
-El cliente recibe una biblioteca digital completa
-con cuadernillos, actividades y diferentes recursos
-organizados por categorías.
-
-ACCESO Y DESCARGA:
-
-No existe límite de tiempo para descargar los archivos.
-
-El acceso es permanente.
-
-El cliente puede descargar los archivos cuando lo necesite.
-
-SEGURIDAD DE LA COMPRA:
-
-Llevamos tiempo trabajando con madres, padres,
-docentes y profesionales.
-
-Gracias a Dios no hemos tenido inconvenientes
-con la entrega de nuestros materiales.
-
-La decisión de confiar en nosotros
-es completamente del cliente.
-
-CASO DE PEQUEÑOS DE 2 AÑOS:
-
-El material está recomendado para pequeños
-de 3 a 8 años.
-
-Sin embargo, algunas mamás nos cuentan que también
-lo utilizan con pequeños de 2 años, especialmente
-en actividades sencillas de:
-
-- Trazos.
-- Motricidad.
-- Coloreado.
-- Recortables.
-
-Siempre adaptándolas a sus habilidades.
-
-ELECCIÓN DE PAQUETE:
-
-Si el cliente confirma que desea el Paquete Premium,
-debes reconocer su elección y guiarlo a elegir método de pago:
-
-- Transferencia bancaria.
-- Depósito en OXXO.
-
-Si el cliente confirma que desea el Kit Anti-Pantallas,
-debes reconocer su elección y guiarlo a elegir método de pago:
-
-- Transferencia bancaria.
-- Depósito en OXXO.
-
-OBJETIVO DE LA CONVERSACIÓN:
-
-Atender a clientes interesados.
-
-Resolver sus dudas de forma breve y clara.
-
-Presentar las opciones disponibles.
-
-Guiarlos hacia el siguiente paso de la compra
-cuando corresponda.
-
-El siguiente paso puede ser:
-
-- Elegir entre el Kit Anti-Pantallas y el Paquete Premium.
-- Elegir entre transferencia bancaria y depósito en OXXO.
-- Continuar con el proceso para completar su acceso.
-
-CIERRE COMERCIAL:
-
-- Agrega un cierre comercial únicamente cuando
-  resulte natural y útil.
-- No agregues un cierre de compra automáticamente
-  a todas las respuestas.
-- Si el cliente pregunta por precio, contenido del producto,
-  opciones de compra o métodos de pago,
-  puedes guiarlo al siguiente paso.
-- Si el cliente solo pregunta por edad, formato,
-  descarga, entrega, seguridad o una duda informativa,
-  responde primero la duda sin presionarlo.
-`;
+const SYSTEM_PROMPT = [
+  "Eres Cris, asistente de soporte de El Espacio de Mamá.",
+  "",
+  "Tu trabajo es atender por WhatsApp a mamás interesadas en el Kit Maternidad y el Paquete Premium.",
+  "",
+  "Tu personalidad es cálida, cercana, clara, profesional y humana.",
+  "Hablas como una persona real por WhatsApp.",
+  "",
+  "REGLAS DE ESTILO:",
+  "",
+  "- Responde siempre en español.",
+  "- Utiliza párrafos cortos y fáciles de leer.",
+  "- Deja una línea en blanco entre ideas cuando ayude a la lectura.",
+  "- Usa emojis de forma moderada. 💗👶✨",
+  "- Evita bloques largos de texto.",
+  "- No repitas información innecesariamente.",
+  "- No saludes nuevamente si la conversación ya comenzó.",
+  "- No hagas preguntas abiertas innecesarias.",
+  "- Responde directamente la duda de la clienta.",
+  "- No uses Markdown como encabezados con símbolos #.",
+  "- No digas que eres una inteligencia artificial.",
+  "- No presiones a la clienta.",
+  "- No satures con información que no haya solicitado.",
+  "- Puedes usar expresiones naturales como mamita, nena, hermana, mira o te cuento, pero sin repetirlas de forma mecánica.",
+  "",
+  "REGLAS OBLIGATORIAS:",
+  "",
+  "- Utiliza exclusivamente la información oficial incluida en esta base de conocimiento.",
+  "- No inventes información.",
+  "- No inventes precios, promociones, productos, beneficios, garantías, políticas, tiempos, enlaces, cuentas bancarias, números de tarjeta, CLABE, referencias de pago ni instrucciones que no estén autorizadas aquí.",
+  "- No contradigas los precios, condiciones, forma de entrega ni métodos de pago oficiales.",
+  "- Si no existe información suficiente para responder, indica de manera natural que necesitas confirmar ese dato con el equipo.",
+  "- Nunca asegures algo que no aparezca expresamente en esta información oficial.",
+  "- Una pregunta sobre un producto NO significa que la clienta ya lo eligió.",
+  "- Solo considera una elección de paquete cuando el mensaje confirme claramente que quiere o prefiere ese paquete.",
+  "",
+  "SEGURIDAD Y SALUD:",
+  "",
+  "- El material es informativo y de acompañamiento.",
+  "- No sustituye la valoración, diagnóstico ni indicaciones de un pediatra u otro profesional de la salud.",
+  "- No prometas que una guía resolverá problemas de sueño, cólicos, alimentación, lactancia o salud.",
+  "- No prometas noches completas de sueño ni resultados garantizados.",
+  "- Si la consulta describe síntomas preocupantes, una emergencia o pide diagnóstico o tratamiento, recomienda consultar a un profesional de salud.",
+  "",
+  "INFORMACIÓN OFICIAL DEL NEGOCIO:",
+  "",
+  "Nombre del negocio: El Espacio de Mamá.",
+  "Lema: Acompañando tu maternidad paso a paso.",
+  "Nombre del agente: Cris.",
+  "",
+  "La oferta está dirigida a mamás con bebés pequeños, con especial conexión con mamás primerizas, sin excluir a quienes ya tienen otros hijos.",
+  "",
+  "PRODUCTOS Y PRECIOS:",
+  "",
+  "- Kit Maternidad: $100 MXN.",
+  "- Paquete Premium: $130 MXN.",
+  "",
+  "MÉTODOS DE PAGO:",
+  "",
+  "- Transferencia bancaria.",
+  "- Depósito en OXXO.",
+  "",
+  "No tienes datos bancarios, números de cuenta, CLABE, tarjeta, QR ni referencias de pago autorizados dentro de esta base.",
+  "Si la clienta solicita alguno de esos datos específicos, indica que necesitas confirmar ese dato con el equipo.",
+  "",
+  "KIT MATERNIDAD — $100 MXN:",
+  "",
+  "Es un paquete digital de acompañamiento para maternidad que incluye cuatro archivos PDF:",
+  "",
+  "1. El Arte de Dormir a tu Bebé:",
+  "- Rutinas de sueño.",
+  "- Despertares nocturnos.",
+  "- Organización de siestas.",
+  "- Hábitos y ambiente de descanso.",
+  "",
+  "2. Cólicos en Bebés:",
+  "- Información sobre señales del cólico.",
+  "- Posibles razones del llanto.",
+  "- Diferencias entre causas de malestar.",
+  "- Formas de reconfortar al bebé.",
+  "- Es material informativo, no diagnóstico ni tratamiento médico.",
+  "",
+  "3. Manual de Cuidados / El Manual de la Mamá Novata:",
+  "- Cuidados del recién nacido.",
+  "- Higiene.",
+  "- Baño.",
+  "- Cambio de pañales.",
+  "- Conexión piel con piel.",
+  "- Temas de cuidado general.",
+  "",
+  "4. BONO GRATIS — Guía de Relajación para Madres Estresadas:",
+  "- Ejercicios de respiración.",
+  "- Técnicas de relajación.",
+  "- Rutinas para descansar.",
+  "- Manejo del estrés.",
+  "- Sugerencias para buscar apoyo.",
+  "",
+  "El Kit Maternidad cuesta $100 MXN, pago único.",
+  "",
+  "ENTREGA DEL KIT MATERNIDAD:",
+  "",
+  "Después de comprobar el pago, los cuatro PDF se envían digitalmente por WhatsApp.",
+  "No es un producto físico.",
+  "",
+  "PAQUETE PREMIUM — $130 MXN:",
+  "",
+  "Incluye el contenido del Kit Maternidad y recursos adicionales organizados por temas:",
+  "",
+  "- Sueño y descanso ampliado: recursos de sueño y masajes para el bebé.",
+  "- Lactancia materna: información práctica.",
+  "- Seguridad y prevención: cuidados y prevención de accidentes.",
+  "- Alimentación complementaria y BLW: guías para esta etapa.",
+  "- Recetarios: papillas y recetas para bebés.",
+  "",
+  "Entre los recursos del Paquete Premium se encuentran:",
+  "- Super Baby Dormilón.",
+  "- 6 Técnicas de Masajes.",
+  "- Lactancia Exitosa.",
+  "- Prevención Muerte Infantil / Accidentes.",
+  "- Alimentación Complementaria Perfecta.",
+  "- Rechazos Alimentarios.",
+  "- Sin Dientes y a Bocados.",
+  "- Método BLW con un Presupuesto Limitado.",
+  "- Recetarios para bebés.",
+  "",
+  "El Paquete Premium cuesta $130 MXN.",
+  "",
+  "ENTREGA DEL PAQUETE PREMIUM:",
+  "",
+  "Una vez confirmado el pago, se entrega acceso digital a los recursos organizados por tema.",
+  "",
+  "FORMATO:",
+  "",
+  "Los materiales son digitales.",
+  "El Kit Maternidad se entrega en archivos PDF.",
+  "No se envía material físico.",
+  "",
+  "ACCESO Y GARANTÍAS:",
+  "",
+  "No hay una duración de acceso, política de garantía o reembolso autorizada dentro de esta base de conocimiento.",
+  "Si la clienta pregunta por esos puntos, indica que necesitas confirmarlos con el equipo.",
+  "",
+  "ELECCIÓN DE PAQUETE:",
+  "",
+  "Si la clienta confirma que desea el Paquete Premium, reconoce su elección y guíala a elegir método de pago:",
+  "- Transferencia bancaria.",
+  "- Depósito en OXXO.",
+  "",
+  "Si la clienta confirma que desea el Kit Maternidad, reconoce su elección y guíala a elegir método de pago:",
+  "- Transferencia bancaria.",
+  "- Depósito en OXXO.",
+  "",
+  "OBJETIVO DE LA CONVERSACIÓN:",
+  "",
+  "- Atender dudas de forma breve y clara.",
+  "- Explicar qué incluye cada opción.",
+  "- Presentar las dos opciones disponibles.",
+  "- Guiar al siguiente paso de compra cuando corresponda.",
+  "",
+  "El siguiente paso puede ser:",
+  "- Elegir entre Kit Maternidad y Paquete Premium.",
+  "- Elegir entre transferencia bancaria y depósito en OXXO.",
+  "- Continuar con el proceso para completar su acceso.",
+  "",
+  "CIERRE COMERCIAL:",
+  "",
+  "- Agrega un cierre comercial únicamente cuando resulte natural y útil.",
+  "- No agregues un cierre de compra automáticamente a todas las respuestas.",
+  "- Si la clienta pregunta por precio, contenido, opciones de compra o métodos de pago, puedes guiarla al siguiente paso.",
+  "- Si solo hace una duda informativa, responde primero la duda sin presionarla."
+].join("\n");
 
 // ==========================================================
 // FUNCIONES GENERALES
@@ -326,16 +265,16 @@ function limpiarRespuesta(valor) {
 
 function cierrePaquete() {
   return elegirAleatoria([
-    "💛 ¿Cuál prefieres para tu peque: Kit Anti-Pantallas o Paquete Premium?",
-    "😊 Si deseas continuar, ¿cuál opción prefieres: Kit Anti-Pantallas o Paquete Premium?",
-    "✨ ¿Te gustaría continuar con el Kit Anti-Pantallas o con el Paquete Premium?"
+    "💗 ¿Cuál prefieres: Kit Maternidad por $100 MXN o Paquete Premium por $130 MXN?",
+    "😊 Si deseas continuar, ¿cuál opción prefieres: Kit Maternidad o Paquete Premium?",
+    "✨ ¿Te gustaría continuar con el Kit Maternidad o con el Paquete Premium?"
   ]);
 }
 
 function cierreMetodoPago() {
   return elegirAleatoria([
     "💳 Puedes continuar por transferencia bancaria 🏦 o depósito en OXXO 🏪. ¿Cuál prefieres? 😊",
-    "💛 Para continuar, puedes elegir transferencia bancaria 🏦 o depósito en OXXO 🏪. ¿Cuál opción prefieres?",
+    "💗 Para continuar, puedes elegir transferencia bancaria 🏦 o depósito en OXXO 🏪. ¿Cuál opción prefieres?",
     "😊 El siguiente paso es elegir tu método de pago: transferencia bancaria 🏦 u OXXO 🏪."
   ]);
 }
@@ -362,10 +301,8 @@ function debeAgregarCierre(textoNormalizado) {
       "que incluye",
       "que contiene",
       "que trae",
-      "incluye el kit",
-      "actividades",
-      "pequenos genios",
-      "kit antipantallas",
+      "kit maternidad",
+      "maternidad",
       "paquete premium",
       "comprar",
       "quiero comprar",
@@ -399,11 +336,10 @@ function debeAgregarCierre(textoNormalizado) {
 }
 
 function agregarCierre(respuesta, mensajeOriginal) {
-  const respuestaLimpia =
-    limpiarRespuesta(respuesta);
+  const respuestaLimpia = limpiarRespuesta(respuesta);
 
   if (!respuestaLimpia) {
-    return "Necesito confirmar ese dato con el equipo para darte información correcta. 💛";
+    return "Necesito confirmar ese dato con el equipo para darte información correcta. 💗";
   }
 
   const tipoCierre =
@@ -421,7 +357,6 @@ function agregarCierre(respuesta, mensajeOriginal) {
   const yaIncluyeCierre =
     normalizada.includes("cual prefieres") ||
     normalizada.includes("cual opcion prefieres") ||
-    normalizada.includes("puedes elegir entre el kit") ||
     (
       normalizada.includes("transferencia bancaria") &&
       normalizada.includes("deposito en oxxo") &&
@@ -437,7 +372,7 @@ function agregarCierre(respuesta, mensajeOriginal) {
       ? cierreMetodoPago()
       : cierrePaquete();
 
-  return `${respuestaLimpia}\n\n${cierre}`;
+  return respuestaLimpia + "\n\n" + cierre;
 }
 
 // ==========================================================
@@ -446,113 +381,116 @@ function agregarCierre(respuesta, mensajeOriginal) {
 
 function respuestaEleccionPremium() {
   return elegirAleatoria([
-    "💛 ¡Excelente elección! Elegiste el Paquete Premium por $130 MXN. ✨\n\n💳 ¿Cómo prefieres realizar tu pago: transferencia bancaria 🏦 o depósito en OXXO 🏪?",
-    "✨ Perfecto, elegiste el Paquete Premium por $130 MXN. 💛\n\n¿Prefieres realizar tu pago mediante transferencia bancaria 🏦 o depósito en OXXO 🏪?",
-    "💛 Perfecto 😊 Continuamos con el Paquete Premium de $130 MXN.\n\n💳 ¿Cómo prefieres pagar: transferencia bancaria 🏦 u OXXO 🏪?"
+    "💗 ¡Excelente elección! Elegiste el Paquete Premium por $130 MXN. ✨\n\n💳 ¿Cómo prefieres realizar tu pago: transferencia bancaria 🏦 o depósito en OXXO 🏪?",
+    "✨ Perfecto, elegiste el Paquete Premium por $130 MXN. 💗\n\n¿Prefieres realizar tu pago mediante transferencia bancaria 🏦 o depósito en OXXO 🏪?",
+    "💗 Perfecto 😊 Continuamos con el Paquete Premium de $130 MXN.\n\n💳 ¿Cómo prefieres pagar: transferencia bancaria 🏦 u OXXO 🏪?"
   ]);
 }
 
-function respuestaEleccionAntipantallas() {
+function respuestaEleccionMaternidad() {
   return elegirAleatoria([
-    "💛 ¡Excelente elección! Elegiste el Kit Anti-Pantallas por $99 MXN. ✨\n\n💳 ¿Cómo prefieres realizar tu pago: transferencia bancaria 🏦 o depósito en OXXO 🏪?",
-    "✨ Perfecto, elegiste el Kit Anti-Pantallas por $99 MXN. 💛\n\n¿Prefieres realizar tu pago mediante transferencia bancaria 🏦 o depósito en OXXO 🏪?",
-    "💛 Perfecto 😊 Continuamos con el Kit Anti-Pantallas de $99 MXN.\n\n💳 ¿Cómo prefieres pagar: transferencia bancaria 🏦 u OXXO 🏪?"
+    "💗 ¡Excelente elección! Elegiste el Kit Maternidad por $100 MXN. ✨\n\n💳 ¿Cómo prefieres realizar tu pago: transferencia bancaria 🏦 o depósito en OXXO 🏪?",
+    "✨ Perfecto, elegiste el Kit Maternidad por $100 MXN. 💗\n\n¿Prefieres realizar tu pago mediante transferencia bancaria 🏦 o depósito en OXXO 🏪?",
+    "💗 Perfecto 😊 Continuamos con el Kit Maternidad de $100 MXN.\n\n💳 ¿Cómo prefieres pagar: transferencia bancaria 🏦 u OXXO 🏪?"
+  ]);
+}
+
+function respuestaContenidoKit() {
+  return elegirAleatoria([
+    "💗 El Kit Maternidad incluye 4 guías digitales: El Arte de Dormir a tu Bebé, Cólicos en Bebés, Manual de Cuidados para el recién nacido y, como bono, la Guía de Relajación para Madres Estresadas. Todo por $100 MXN.",
+    "👶✨ Con el Kit Maternidad recibes 4 PDF: sueño del bebé, cólicos, cuidados del recién nacido y una guía de relajación para mamá. El precio es de $100 MXN.",
+    "💗 Son 4 guías digitales pensadas para acompañarte en temas de sueño, cólicos, cuidados cotidianos del bebé y bienestar de mamá. El Kit Maternidad cuesta $100 MXN."
   ]);
 }
 
 function respuestaContenidoPremium() {
   return elegirAleatoria([
-    "💛 El Paquete Premium incluye el Kit Anti-Pantallas, el Kit Pequeños Genios, la Biblioteca Premium de Refuerzo Escolar y todos los bonos. 📚✨ Además, tienes acceso de por vida.",
-    "📚✨ El Paquete Premium incluye Kit Anti-Pantallas + Kit Pequeños Genios + Biblioteca Premium de Refuerzo Escolar + todos los bonos, con acceso de por vida. 💛",
-    "💛 Con el Paquete Premium recibes el Kit Anti-Pantallas, el Kit Pequeños Genios, la Biblioteca Premium de Refuerzo Escolar y todos los bonos. ✨ El acceso es de por vida."
+    "💗 El Paquete Premium incluye todo el Kit Maternidad y recursos adicionales sobre sueño y masajes, lactancia, seguridad y prevención, alimentación complementaria y BLW, además de recetarios para bebés. Su precio es de $130 MXN.",
+    "👶✨ Con el Paquete Premium recibes las 4 guías iniciales más materiales organizados por temas: sueño y descanso, lactancia, seguridad, alimentación complementaria, BLW y recetarios. Cuesta $130 MXN.",
+    "💗 El Premium reúne el Kit Maternidad y material adicional para distintas etapas: sueño, masajes, lactancia, prevención, alimentación complementaria, BLW y recetas para bebés. Todo por $130 MXN."
   ]);
 }
 
 function respuestaDatosPagoNoDisponibles() {
   return elegirAleatoria([
-    "💛 Para darte los datos correctos de transferencia u OXXO, necesito confirmar esa información con el equipo.",
-    "😊 Necesito confirmar con el equipo los datos específicos de pago para compartirte la información correcta. 💛",
-    "💛 Los datos específicos de cuenta, CLABE, tarjeta, código o QR no están disponibles en mi información autorizada. Necesito confirmarlos con el equipo."
+    "💗 Para darte los datos correctos de transferencia u OXXO, necesito confirmar esa información con el equipo.",
+    "😊 Necesito confirmar con el equipo los datos específicos de pago para compartirte la información correcta. 💗",
+    "💗 Los datos específicos de cuenta, CLABE, tarjeta, código o QR no están disponibles en mi información autorizada. Necesito confirmarlos con el equipo."
   ]);
 }
 
 function respuestaMetodosPago() {
   return elegirAleatoria([
     "💳 Puedes realizar tu pago mediante transferencia bancaria 🏦 o depósito en OXXO 🏪✨.",
-    "💛 Aceptamos pago mediante transferencia bancaria 🏦 o depósito en OXXO 🏪✨.",
+    "💗 Aceptamos pago mediante transferencia bancaria 🏦 o depósito en OXXO 🏪✨.",
     "😊 Puedes pagar por transferencia bancaria 🏦 o mediante depósito en OXXO 🏪. 💳✨"
   ]);
 }
 
 function respuestaEntrega() {
   return elegirAleatoria([
-    "📄 En cuanto se confirme tu pago, recibirás inmediatamente una Guía de Acceso en PDF con las instrucciones y enlaces para acceder y descargar tus materiales. 🔗📚✨",
-    "💛 Una vez confirmado tu pago, recibirás inmediatamente una Guía de Acceso en PDF que contiene las instrucciones y enlaces para entrar y descargar tus materiales. 📄🔗",
-    "📲 Al confirmarse tu pago, recibirás inmediatamente una Guía de Acceso en PDF con las instrucciones y enlaces necesarios para acceder y descargar tus materiales. 💛✨"
+    "📲 Una vez confirmado tu pago, la entrega es digital. Si eliges el Kit Maternidad, recibes los 4 PDF por WhatsApp. 💗✨",
+    "💗 Después de comprobar tu pago, recibes tu material de forma digital. El Kit Maternidad se envía directamente por WhatsApp. 📲",
+    "📄✨ Al confirmarse tu pago, recibes el material digital correspondiente a tu paquete. El Kit Maternidad se entrega por WhatsApp."
   ]);
 }
 
-function respuestaSeguridad() {
+function respuestaFormato() {
   return elegirAleatoria([
-    "💛 ¡Claro! 😊 Llevamos tiempo trabajando con madres, padres, docentes y profesionales. Gracias a Dios no hemos tenido inconvenientes con la entrega de nuestros materiales. 🙏✨ Al final, la decisión de confiar en nosotros es completamente tuya. 🤍",
-    "💛 Llevamos tiempo trabajando con madres, padres, docentes y profesionales y, gracias a Dios, no hemos tenido inconvenientes con la entrega de nuestros materiales. 🙏✨ La decisión de confiar en nosotros es completamente tuya. 😊",
-    "😊💛 Hemos trabajado con madres, padres, docentes y profesionales y, gracias a Dios, no hemos tenido inconvenientes con nuestras entregas. 🙏✨ Al final, la decisión de confiar en nosotros siempre es completamente tuya. 🤍"
+    "📲 Es material digital, no físico. El Kit Maternidad se entrega en archivos PDF. 💗",
+    "💗 Todo el material es digital. No se envían libros ni productos físicos. 📄✨",
+    "📄 El material se entrega digitalmente; el Kit Maternidad está compuesto por archivos PDF."
   ]);
 }
 
-function respuestaDosAnos() {
+function respuestaAccesoNoConfirmado() {
   return elegirAleatoria([
-    "💛 Nuestro material está recomendado para pequeños de 3 a 8 años. 😊 Sin embargo, algunas mamás nos cuentan que también lo utilizan con sus pequeños de 2 años, especialmente en actividades sencillas de trazos, motricidad, coloreado y recortables, siempre adaptándolas a sus habilidades. 🎨✂️✨",
-    "💛 El material está recomendado para pequeños de 3 a 8 años. 😊 Algunas mamás también lo utilizan con pequeños de 2 años en actividades sencillas como trazos, motricidad, coloreado y recortables, adaptándolas siempre a sus habilidades. 🎨✂️✨",
-    "😊 La edad recomendada es de 3 a 8 años. 💛 Aun así, algunas mamás nos cuentan que con pequeños de 2 años usan actividades sencillas de trazos, motricidad, coloreado y recortables, siempre ajustándolas a sus habilidades. 🎨✨"
+    "💗 Para no darte información incorrecta, necesito confirmar con el equipo la duración exacta del acceso.",
+    "😊 La duración específica del acceso no está confirmada en mi información autorizada. Necesito validarla con el equipo. 💗",
+    "💗 Necesito confirmar con el equipo ese dato antes de decirte una duración de acceso."
   ]);
 }
 
-function respuestaFisico() {
+function respuestaGarantiaNoConfirmada() {
   return elegirAleatoria([
-    "📲 No. Es un producto 100% digital, en formato PDF listo para descargar e imprimir. 🖨️✨",
-    "📲 El material no es físico; es 100% digital y está en formato PDF listo para descargar e imprimir. 🖨️✨",
-    "💛 Es un producto completamente digital en formato PDF, listo para descargar e imprimir. No es material físico. 📲🖨️"
-  ]);
-}
-
-function respuestaDescarga() {
-  return elegirAleatoria([
-    "⏰ No hay límite. Tu acceso es permanente y puedes descargar los archivos cuando lo necesites. 📚✨",
-    "💛 No tienes límite de tiempo para descargarlo. El acceso es permanente y puedes descargar los archivos cuando lo necesites. 📚✨",
-    "📚 Tu acceso es permanente, así que no hay límite de tiempo para descargar los archivos. Puedes hacerlo cuando lo necesites. ⏰✨"
-  ]);
-}
-
-function respuestaLibro() {
-  return elegirAleatoria([
-    "💛 No. Recibes una biblioteca digital completa con cuadernillos, actividades y diferentes recursos organizados por categorías. 📚🧩",
-    "📚 No es solo un libro. Recibes una biblioteca digital completa con cuadernillos, actividades y distintos recursos organizados por categorías. 💛🧩",
-    "💛 Recibes mucho más que un solo libro: es una biblioteca digital con cuadernillos, actividades y diferentes recursos organizados por categorías. 📚✨"
-  ]);
-}
-
-function respuestaKitAntipantallas() {
-  return elegirAleatoria([
-    "🎨 El Kit Anti-Pantallas incluye juegos, desafíos, recortables, motricidad, inteligencia emocional, coloreables, cuadernillos y más de 500 actividades, además de todos los bonos. 🎁✨",
-    "🎨 Incluye juegos, desafíos, recortables, motricidad, inteligencia emocional, coloreables, cuadernillos y más de 500 actividades, además de todos los bonos. 🎁✨",
-    "💛 En el Kit Anti-Pantallas encontrarás juegos, desafíos, recortables, motricidad, inteligencia emocional, coloreables, cuadernillos y más de 500 actividades, además de todos los bonos. 🎨🎁"
-  ]);
-}
-
-function respuestaPequenosGenios() {
-  return elegirAleatoria([
-    "📚 El Kit Pequeños Genios incluye actividades de Lectoescritura, Pensamiento Matemático y Lógica, listas para imprimir. ✏️🔢🧩",
-    "📚 Pequeños Genios incluye actividades listas para imprimir de Lectoescritura, Pensamiento Matemático y Lógica. ✏️🔢🧩",
-    "✏️📚 El Kit Pequeños Genios contiene actividades de Lectoescritura, Pensamiento Matemático y Lógica, todas listas para imprimir. 🔢🧩"
+    "💗 La política específica de garantía o reembolso necesito confirmarla con el equipo para darte la información correcta.",
+    "😊 No tengo autorizada una política de garantía o reembolso dentro de mi información. Necesito confirmarla con el equipo. 💗"
   ]);
 }
 
 function respuestaPrecio() {
   return elegirAleatoria([
-    `💛 El ${NEGOCIO.productos.kitAntipantallas.nombre} cuesta $${NEGOCIO.productos.kitAntipantallas.precio} MXN. También puedes adquirir el ${NEGOCIO.productos.paquetePremium.nombre} por $${NEGOCIO.productos.paquetePremium.precio} MXN. ✨`,
-    `💛 El precio del ${NEGOCIO.productos.kitAntipantallas.nombre} es de $${NEGOCIO.productos.kitAntipantallas.precio} MXN y el ${NEGOCIO.productos.paquetePremium.nombre} tiene un costo de $${NEGOCIO.productos.paquetePremium.precio} MXN. ✨`,
-    `✨ Puedes elegir el ${NEGOCIO.productos.kitAntipantallas.nombre} por $${NEGOCIO.productos.kitAntipantallas.precio} MXN o el ${NEGOCIO.productos.paquetePremium.nombre} por $${NEGOCIO.productos.paquetePremium.precio} MXN. 💛`
+    "💗 El Kit Maternidad cuesta $100 MXN y el Paquete Premium cuesta $130 MXN. ✨",
+    "✨ Puedes elegir el Kit Maternidad por $100 MXN o el Paquete Premium por $130 MXN. 💗",
+    "💗 Tenemos dos opciones: Kit Maternidad $100 MXN y Paquete Premium $130 MXN."
+  ]);
+}
+
+function respuestaSueno() {
+  return elegirAleatoria([
+    "🌙 La guía El Arte de Dormir a tu Bebé aborda rutinas de sueño, despertares nocturnos, siestas, hábitos y ambiente de descanso. Es información de acompañamiento y no promete resultados garantizados.",
+    "💗 Dentro del Kit Maternidad tienes una guía sobre sueño del bebé con información para organizar rutinas, siestas, hábitos y ambiente de descanso. 🌙"
+  ]);
+}
+
+function respuestaColicos() {
+  return elegirAleatoria([
+    "👶 La guía Cólicos en Bebés reúne información sobre señales del cólico, posibles razones del llanto y formas de reconfortar al bebé. Es material informativo y no sustituye una valoración médica.",
+    "💗 Sí, el Kit incluye una guía sobre cólicos y llanto del bebé, con información práctica y formas de acompañarlo. No es diagnóstico ni tratamiento médico."
+  ]);
+}
+
+function respuestaCuidados() {
+  return elegirAleatoria([
+    "🍼 El Manual de Cuidados aborda cuidados del recién nacido, higiene, baño, pañales, conexión piel con piel y temas cotidianos de cuidado.",
+    "💗 Incluye un manual para mamás con información sobre higiene, baño, pañales, piel con piel y cuidados generales del recién nacido."
+  ]);
+}
+
+function respuestaRelajacionMama() {
+  return elegirAleatoria([
+    "💗 También recibes como bono una Guía de Relajación para Madres Estresadas con ejercicios de respiración, técnicas de relajación, rutinas de descanso y sugerencias para buscar apoyo.",
+    "✨ El bono para mamá incluye respiración, relajación, ideas para descansar y herramientas de manejo del estrés. 💗"
   ]);
 }
 
@@ -561,16 +499,11 @@ function respuestaPrecio() {
 // ==========================================================
 
 function respuestaDirecta(mensajeOriginal) {
-  const texto =
-    normalizarTexto(mensajeOriginal);
+  const texto = normalizarTexto(mensajeOriginal);
 
   if (!texto) {
     return null;
   }
-
-  // --------------------------------------------------------
-  // CONTENIDO DEL PAQUETE PREMIUM
-  // --------------------------------------------------------
 
   const preguntaContenidoPremium =
     contieneAlguna(texto, [
@@ -578,10 +511,8 @@ function respuestaDirecta(mensajeOriginal) {
       "que incluye premium",
       "que incluye el paquete premium",
       "que contiene el premium",
-      "que contiene premium",
       "que contiene el paquete premium",
       "que trae el premium",
-      "que trae premium",
       "que trae el paquete premium",
       "contenido del premium",
       "contenido del paquete premium"
@@ -594,10 +525,6 @@ function respuestaDirecta(mensajeOriginal) {
       respuesta: respuestaContenidoPremium()
     };
   }
-
-  // --------------------------------------------------------
-  // ELECCIÓN PREMIUM
-  // --------------------------------------------------------
 
   const eleccionPremium =
     esIgualAAlguna(texto, [
@@ -616,8 +543,8 @@ function respuestaDirecta(mensajeOriginal) {
       "elijo premium",
       "elijo el premium",
       "elijo el paquete premium",
-      "quiero ese premium",
-      "quiero ese paquete"
+      "paq premium",
+      "paq premium 130"
     ]);
 
   if (eleccionPremium) {
@@ -628,80 +555,125 @@ function respuestaDirecta(mensajeOriginal) {
     };
   }
 
-  // --------------------------------------------------------
-  // ELECCIÓN ANTI-PANTALLAS
-  // --------------------------------------------------------
-
-  const eleccionAntipantallas =
+  const eleccionMaternidad =
     esIgualAAlguna(texto, [
-      "anti-pantallas",
-      "anti pantallas",
-      "antipantallas",
-      "kit anti-pantallas",
-      "kit anti pantallas",
-      "kit antipantallas",
-      "quiero anti-pantallas",
-      "quiero anti pantallas",
-      "quiero antipantallas",
-      "quiero el kit anti-pantallas",
-      "quiero el kit anti pantallas",
-      "quiero el kit antipantallas",
-      "me quedo con anti-pantallas",
-      "me quedo con anti pantallas",
-      "me quedo con antipantallas",
-      "prefiero anti-pantallas",
-      "prefiero anti pantallas",
-      "prefiero antipantallas",
-      "elijo anti-pantallas",
-      "elijo anti pantallas",
-      "elijo antipantallas"
+      "maternidad",
+      "kit maternidad",
+      "kit de maternidad",
+      "quiero maternidad",
+      "quiero el kit maternidad",
+      "quiero el kit de maternidad",
+      "me quedo con maternidad",
+      "me quedo con el kit maternidad",
+      "prefiero maternidad",
+      "prefiero el kit maternidad",
+      "elijo maternidad",
+      "elijo el kit maternidad",
+      "kit maternidad 100"
     ]);
 
-  if (eleccionAntipantallas) {
+  if (eleccionMaternidad) {
     return {
-      intencion: "eleccion_kit_antipantallas",
-      paquete_elegido: "antipantallas",
-      respuesta: respuestaEleccionAntipantallas()
+      intencion: "eleccion_kit_maternidad",
+      paquete_elegido: "maternidad",
+      respuesta: respuestaEleccionMaternidad()
     };
   }
 
-  const preguntaDosAnos =
+  const preguntaContenidoKit =
     contieneAlguna(texto, [
-      "2 años",
-      "2 ano",
-      "dos años",
-      "tiene 2",
-      "mi hijo tiene 2",
-      "mi hija tiene 2"
+      "que incluye el kit maternidad",
+      "que incluye maternidad",
+      "que contiene el kit maternidad",
+      "que contiene maternidad",
+      "que trae el kit maternidad",
+      "contenido del kit maternidad",
+      "que viene en el kit",
+      "que son las 4 guias",
+      "cuales son las guias"
     ]);
 
-  if (preguntaDosAnos) {
+  if (preguntaContenidoKit) {
     return {
-      intencion: "edad_2_anos",
+      intencion: "contenido_kit_maternidad",
       paquete_elegido: "ninguno",
-      respuesta: respuestaDosAnos()
+      respuesta: respuestaContenidoKit()
     };
   }
 
-  const preguntaGenios =
+  const preguntaSueno =
     contieneAlguna(texto, [
-      "genios",
-      "pequenos genios",
-      "kit pequenos genios",
-      "que incluye pequenos genios",
-      "que trae pequenos genios",
-      "contenido pequenos genios"
+      "sueno",
+      "dormir",
+      "duerme",
+      "siestas",
+      "despertares",
+      "arte de dormir"
     ]);
 
-  if (preguntaGenios) {
+  if (preguntaSueno) {
     return {
-      intencion: "kit_pequenos_genios",
+      intencion: "guia_sueno",
       paquete_elegido: "ninguno",
-      respuesta: respuestaPequenosGenios()
+      respuesta: respuestaSueno()
     };
   }
 
-  const preguntaFisico =
+  const preguntaColicos =
+    contieneAlguna(texto, [
+      "colicos",
+      "colico",
+      "llanto",
+      "llora mucho"
+    ]);
+
+  if (preguntaColicos) {
+    return {
+      intencion: "guia_colicos",
+      paquete_elegido: "ninguno",
+      respuesta: respuestaColicos()
+    };
+  }
+
+  const preguntaCuidados =
+    contieneAlguna(texto, [
+      "cuidados",
+      "recien nacido",
+      "higiene",
+      "bano",
+      "pañales",
+      "panales",
+      "piel con piel",
+      "mama novata"
+    ]);
+
+  if (preguntaCuidados) {
+    return {
+      intencion: "guia_cuidados",
+      paquete_elegido: "ninguno",
+      respuesta: respuestaCuidados()
+    };
+  }
+
+  const preguntaRelajacion =
+    contieneAlguna(texto, [
+      "relajacion",
+      "estres",
+      "estresada",
+      "ansiedad de mama",
+      "descansar mama",
+      "bono para mama"
+    ]);
+
+  if (preguntaRelajacion) {
+    return {
+      intencion: "guia_relajacion_mama",
+      paquete_elegido: "ninguno",
+      respuesta: respuestaRelajacionMama()
+    };
+  }
+
+  const preguntaFormato =
     contieneAlguna(texto, [
       "fisico",
       "es fisico",
@@ -715,49 +687,11 @@ function respuestaDirecta(mensajeOriginal) {
       "formato pdf"
     ]);
 
-  if (preguntaFisico) {
+  if (preguntaFormato) {
     return {
-      intencion: "material_fisico",
+      intencion: "formato_digital",
       paquete_elegido: "ninguno",
-      respuesta: respuestaFisico()
-    };
-  }
-
-  const preguntaDescarga =
-    contieneAlguna(texto, [
-      "descarga",
-      "descargar",
-      "cuanto tiempo tengo para descargar",
-      "tiempo para descargar",
-      "hay limite para descargar",
-      "limite de descarga",
-      "puedo descargar despues",
-      "cuando puedo descargar"
-    ]);
-
-  if (preguntaDescarga) {
-    return {
-      intencion: "tiempo_descarga",
-      paquete_elegido: "ninguno",
-      respuesta: respuestaDescarga()
-    };
-  }
-
-  const preguntaLibro =
-    contieneAlguna(texto, [
-      "libro",
-      "es solo un libro",
-      "solo es un libro",
-      "un solo libro",
-      "cuadernillos",
-      "biblioteca digital"
-    ]);
-
-  if (preguntaLibro) {
-    return {
-      intencion: "biblioteca_no_libro",
-      paquete_elegido: "ninguno",
-      respuesta: respuestaLibro()
+      respuesta: respuestaFormato()
     };
   }
 
@@ -770,11 +704,8 @@ function respuestaDirecta(mensajeOriginal) {
       "cuando lo recibo",
       "cuando me llega",
       "cuanto tarda",
-      "cuanto tarda en llegar",
       "despues del pago",
       "despues de pagar",
-      "despues de realizar el pago",
-      "guia de acceso",
       "como llega",
       "donde lo recibo"
     ]);
@@ -787,26 +718,36 @@ function respuestaDirecta(mensajeOriginal) {
     };
   }
 
-  const preguntaSeguridad =
+  const preguntaAcceso =
     contieneAlguna(texto, [
-      "seguro",
-      "es seguro",
-      "compra segura",
-      "es confiable",
-      "confiable",
-      "puedo confiar",
-      "como se que me llega",
-      "como se que lo recibire",
-      "es real",
-      "estafa",
-      "fraude"
+      "acceso de por vida",
+      "acceso para siempre",
+      "cuanto dura el acceso",
+      "duracion del acceso",
+      "cuanto tiempo tengo acceso"
     ]);
 
-  if (preguntaSeguridad) {
+  if (preguntaAcceso) {
     return {
-      intencion: "seguridad_compra",
+      intencion: "acceso_por_confirmar",
       paquete_elegido: "ninguno",
-      respuesta: respuestaSeguridad()
+      respuesta: respuestaAccesoNoConfirmado()
+    };
+  }
+
+  const preguntaGarantia =
+    contieneAlguna(texto, [
+      "garantia",
+      "reembolso",
+      "devolucion",
+      "devolver dinero"
+    ]);
+
+  if (preguntaGarantia) {
+    return {
+      intencion: "garantia_por_confirmar",
+      paquete_elegido: "ninguno",
+      respuesta: respuestaGarantiaNoConfirmada()
     };
   }
 
@@ -820,8 +761,10 @@ function respuestaDirecta(mensajeOriginal) {
       "cuanto sale",
       "precio del kit",
       "precio del paquete",
-      "$99",
-      "$130"
+      "$100",
+      "$130",
+      "100 pesos",
+      "130 pesos"
     ]);
 
   if (preguntaPrecio) {
@@ -829,26 +772,6 @@ function respuestaDirecta(mensajeOriginal) {
       intencion: "precio",
       paquete_elegido: "ninguno",
       respuesta: respuestaPrecio()
-    };
-  }
-
-  const preguntaActividades =
-    contieneAlguna(texto, [
-      "actividades",
-      "que incluye el kit antipantallas",
-      "que incluye el kit anti pantallas",
-      "que trae el kit antipantallas",
-      "que trae el kit anti pantallas",
-      "contenido del kit antipantallas",
-      "contenido del kit anti pantallas",
-      "que viene en el kit"
-    ]);
-
-  if (preguntaActividades) {
-    return {
-      intencion: "contenido_kit_antipantallas",
-      paquete_elegido: "ninguno",
-      respuesta: respuestaKitAntipantallas()
     };
   }
 
@@ -914,7 +837,7 @@ app.get("/", (req, res) => {
   return res
     .status(200)
     .send(
-      "Agente de Enseña Sin Estrés activo ✅"
+      "Agente de El Espacio de Mamá activo ✅"
     );
 });
 
@@ -932,14 +855,14 @@ app.post("/mensaje", async (req, res) => {
     console.log(
       "Mensaje recibido:",
       textoUsuario
-        ? `[contenido recibido: ${textoUsuario.length} caracteres]`
+        ? "[contenido recibido: " + textoUsuario.length + " caracteres]"
         : "[vacío]"
     );
 
     if (!textoUsuario) {
       return res.json({
         respuesta:
-          "Estoy aquí para ayudarte 😊\n\nPuedes escribirme tu duda sobre el Kit Anti-Pantallas, el Paquete Premium, la entrega o las formas de pago. 💛",
+          "Estoy aquí para ayudarte 😊\n\nPuedes escribirme tu duda sobre el Kit Maternidad, el Paquete Premium, la entrega o las formas de pago. 💗",
         paquete_elegido: "ninguno"
       });
     }
@@ -950,8 +873,10 @@ app.post("/mensaje", async (req, res) => {
     if (directa) {
       const noAgregarCierre =
         directa.intencion === "datos_pago_por_confirmar" ||
+        directa.intencion === "acceso_por_confirmar" ||
+        directa.intencion === "garantia_por_confirmar" ||
         directa.intencion === "eleccion_paquete_premium" ||
-        directa.intencion === "eleccion_kit_antipantallas";
+        directa.intencion === "eleccion_kit_maternidad";
 
       const respuestaFinal =
         noAgregarCierre
@@ -1002,7 +927,7 @@ app.post("/mensaje", async (req, res) => {
 
       const respuestaBase =
         respuestaIA ||
-        "Necesito confirmar ese dato con el equipo para darte información correcta. 💛";
+        "Necesito confirmar ese dato con el equipo para darte información correcta. 💗";
 
       const respuestaFinal =
         agregarCierre(
@@ -1022,7 +947,7 @@ app.post("/mensaje", async (req, res) => {
 
       return res.status(200).json({
         respuesta:
-          "En este momento no pude procesar tu mensaje. Por favor, inténtalo nuevamente en unos minutos. 💛",
+          "En este momento no pude procesar tu mensaje. Por favor, inténtalo nuevamente en unos minutos. 💗",
         paquete_elegido: "ninguno"
       });
     }
@@ -1034,7 +959,7 @@ app.post("/mensaje", async (req, res) => {
 
     return res.status(200).json({
       respuesta:
-        "En este momento no pude procesar tu mensaje. Por favor, inténtalo nuevamente en unos minutos. 💛",
+        "En este momento no pude procesar tu mensaje. Por favor, inténtalo nuevamente en unos minutos. 💗",
       paquete_elegido: "ninguno"
     });
   }
@@ -1052,7 +977,7 @@ app.use((error, req, res, next) => {
 
   return res.status(200).json({
     respuesta:
-      "En este momento no pude procesar tu mensaje. Por favor, inténtalo nuevamente en unos minutos. 💛",
+      "En este momento no pude procesar tu mensaje. Por favor, inténtalo nuevamente en unos minutos. 💗",
     paquete_elegido: "ninguno"
   });
 });
@@ -1063,6 +988,6 @@ app.use((error, req, res, next) => {
 
 app.listen(PORT, () => {
   console.log(
-    `Servidor corriendo en puerto ${PORT}`
+    "Servidor corriendo en puerto " + PORT
   );
 });
